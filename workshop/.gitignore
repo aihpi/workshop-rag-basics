@@ -6,3 +6,4 @@ chainlit.log
 chainlit.md
 .chainlit/
 .files/
+chunks.json
