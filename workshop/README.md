@@ -46,9 +46,9 @@ The slides are in [`slides/`](slides/): [`rag-workshop.pdf`](slides/rag-workshop
 | 0:25 | Slides + `02_documents.ipynb` | Reading PDFs with Docling; chunks |
 | 0:38 | Slides | What we found so far; embeddings and vector search |
 | 0:45 | `03_search.ipynb` | Embeddings; Qdrant; a search engine |
-| 0:58 | Slides + `04_rag.ipynb` | Answering from the papers, with citations |
-| 1:14 | `05_together.ipynb` | All pieces in one chatbot; your own PDFs |
-| 1:24 | Slides | Where to go next, feedback |
+| 0:58 | Slides + `04_rag.ipynb` | Answering from the papers, with citations; is the answer any good? |
+| 1:16 | `05_together.ipynb` | All pieces in one chatbot; your own PDFs |
+| 1:26 | Slides | Evaluation, where to go next, feedback |
 | 1:30 | End | |
 
 Each notebook needs the files the earlier ones save (`chunks.json`, `index.json`), so run

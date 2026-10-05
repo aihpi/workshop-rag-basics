@@ -208,7 +208,7 @@ text(s, 1.67, 2.24, 15, 0.4, "[EVENT]", size=19.5, bold=True, color="DC640D", sp
 text(s, 1.67, 2.82, 15, 1.1, "HANDS-ON RAG", size=69, bold=True, color=GREY)
 text(s, 1.67, 4.11, 15, 0.7, "Build your own document Q&A system", size=34.5, color=RED)
 rect(s, 1.67, 5.2, 1.25, 0.08, RED)
-text(s, 1.67, 5.76, 14, 1.1, [[("Felix Boelter", {"size": 22.5})],
+text(s, 1.67, 5.76, 14, 1.1, [[("Felix Boelter  |  [Co-moderator]", {"size": 22.5})],
                               [("AI Service Centre Berlin-Brandenburg  |  [Date]", {"size": 22.5, "color": GREY})]])
 image(s, "logo-kisz.png", 16.45, 0.74, w=2.8)
 image(s, "logo-bmftr.png", 16.41, 1.98, w=2.8)
@@ -237,9 +237,9 @@ AGENDA = [(0, 10, RED, "Slides", "Welcome, the AI Service Centre, why RAG"),
           (25, 13, YELLOW, "Slides + notebook 2", "From document to chunks · reading documents"),
           (38, 7, BLUE, "Slides", "What we found so far · embeddings and vector search"),
           (45, 13, YELLOW, "Notebook 3", "Search"),
-          (58, 16, YELLOW, "Slides + notebook 4", "Prompt and citations · retrieval-augmented generation"),
-          (74, 10, YELLOW, "Notebook 5", "Putting it together"),
-          (84, 6, RED, "Slides", "Evaluation, where to go next, feedback")]
+          (58, 18, YELLOW, "Slides + notebook 4", "Prompt and citations · RAG · is the answer any good?"),
+          (76, 10, YELLOW, "Notebook 5", "Putting it together"),
+          (86, 4, RED, "Slides", "Evaluation, where to go next, feedback")]
 for i, (start, minutes, colour, kind, what) in enumerate(AGENDA):
     y = 2.05 + i * 0.74
     text(s, 1.16, y, 1.2, 0.6, f"{start // 60}:{start % 60:02d}", size=20, bold=True, color=GREY, anchor=MSO_ANCHOR.MIDDLE)
@@ -250,32 +250,12 @@ for i, (start, minutes, colour, kind, what) in enumerate(AGENDA):
 per_minute = 17.7 / 90
 for start, minutes, colour, _, _ in AGENDA:
     rect(s, 1.16 + start * per_minute, 9.0, minutes * per_minute - 0.04, 0.42, colour)
-hands_on = 10 + 10 + 13 + 13 + 10  # the notebook times; the mixed blocks open with 3 min of slides
+hands_on = 10 + 10 + 13 + 15 + 10  # the notebook times; the mixed blocks open with 3 min of slides
 text(s, 1.16, 9.6, 17.7, 0.5, [[("■ ", {"color": YELLOW}), (f"notebooks, hands-on: {hands_on} min     ", {}),
                                 ("■ ", {"color": BLUE}), ("theory     ", {}), ("■ ", {"color": RED}), ("welcome and wrap-up", {})]],
      size=16, color=GREY)
 notes(s, "The plan for today: theory in small doses, most of the time in the notebooks. "
          "The two mixed blocks start with 3 minutes of slides, then the notebook.")
-
-# ---------------------------------------------------------------------------- about me
-s = content("About me", MUTED, None)
-photo = ASSETS / "presenter.jpg"
-if photo.exists():
-    image(s, photo, 1.16, 2.2, w=4.6, h=4.6)
-else:  # drop an 800×800 headshot at assets/presenter.jpg and rebuild
-    rect(s, 1.16, 2.2, 4.6, 4.6, SAND)
-    text(s, 1.16, 2.2, 4.6, 4.6, "Photo\nassets/presenter.jpg", size=17, color=MUTED, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
-text(s, 6.4, 2.15, 12, 0.7, "Felix Boelter", size=34, bold=True)
-text(s, 6.4, 2.95, 12, 0.5, "AI Engineer · Hasso-Plattner-Institut · AI Service Centre Berlin-Brandenburg", size=19, color=RED)
-text(s, 6.4, 3.85, 12.4, 5, [[(f"•  {item}", {"space_after": 10})] for item in [
-    "Builds LLM inference infrastructure on Kubernetes",
-    "Develops RAG and agentic AI systems with public-sector and SME partners",
-    "Teaches the stack in hands-on workshops and a free openHPI course with over 5,000 learners",
-    "Studied AI at USI Lugano, Switzerland, Magna Cum Laude; now researching model compression"]], size=20, line=1.2)
-image(s, qr("https://www.linkedin.com/in/felixboelter/", "qr-linkedin"), 1.16, 7.3, w=1.9)
-text(s, 3.3, 7.75, 6, 0.9, [[("LinkedIn", {"bold": True})],
-                            [("linkedin.com/in/felixboelter", {"link": "https://www.linkedin.com/in/felixboelter/", "color": GREY})]], size=17)
-notes(s, "One minute: who I am, and that the code from today is yours to keep.")
 
 # ---------------------------------------------------------------------------- 3–7 KISZ
 s = divider("01", "AI Service Centre\nBerlin-Brandenburg", "Who we are and what you can use.", RED)
@@ -602,9 +582,9 @@ text(s, 13.4, 6.9, 6.0, 2.5, "Every [n] leads back to a chunk, and every chunk r
      "That is all a citation is.", size=19, line=1.25)
 notes(s, "3 minutes. RAG = retrieve, augment, generate. Citations are bookkeeping, not magic.")
 
-s = notebook(4, "Retrieval-augmented generation", 13,
+s = notebook(4, "Retrieval-augmented generation", 15,
              ["Ask notebook 1's question again, this time with context", "Let the model cite the numbered chunks",
-              "Turn every [n] into a link to the PDF page"],
+              "Score both answers: faithfulness with context and without"],
              ["Strict or not: remove \"say you don't know\"", "How much context: limit 2 versus 15",
               "Show the evidence in the search step", "If time: follow-up questions"],
              [("you", "In Kage et al. (2018), what were the lifetime-encoded beads loaded with?", 1.0),
@@ -612,7 +592,7 @@ s = notebook(4, "Retrieval-augmented generation", 13,
               ("bot", "PMMA beads stained with organic dyes from PolyAn GmbH [1], and melamine beads loaded with "
                       "CdSe/CdS/ZnS quantum dots [1], [2].\n\nSources:  Kage_2018_SciReports, p. 2", 2.4),
               ("step", "Click the source: the PDF opens at page 2.", 0.45)])
-notes(s, "13 minutes. Compare with the invented answer from notebook 1, same question. Let them click a source.")
+notes(s, "15 minutes. Compare with the invented answer from notebook 1, same question. The faithfulness judge makes the difference a number: in testing 1.0 with context, between 0.14 and 0.5 without; the invented answer differs every run. Let them click a source.")
 
 s = content("Putting it together", YELLOW, "HANDS-ON")
 kicker(s, 1.16, 1.85, 9, "Notebook 5 · 10 min", ORANGE)
@@ -621,8 +601,8 @@ text(s, 1.16, 6.35, 10.2, 1.0, "One app.py with every piece. Attach a PDF in the
      "read, chunk, embed, store. Then ask about it.", size=18, line=1.25)
 kicker(s, 12.3, 2.45, 7, "Your turn · in the chatbot")
 numbered(s, 12.3, 2.95, 7.2, ["Your own document: attach a PDF and ask", "Chat with this document only: a Qdrant filter",
-                              "If time: a dropdown to switch the model"], gap=0.95)
-text(s, 12.3, 5.85, 7.2, 0.4, "Solutions are folded away under each exercise.", size=15, color=MUTED)
+                              "Faithfulness under every answer", "If time: switch the model, compare scores"], gap=0.8)
+text(s, 12.3, 6.25, 7.2, 0.4, "Solutions are folded away under each exercise.", size=15, color=MUTED)
 pieces = [("Read a PDF with Docling", "2"), ("Cut into chunks", "2"), ("Turn text into vectors", "3"),
           ("Store and search in Qdrant", "3"), ("Answer from the chunks", "4"), ("Cite the page", "4")]
 kicker(s, 1.16, 7.7, 9, "Piece · notebook")
@@ -636,8 +616,8 @@ notes(s, "10 minutes. Remind them how the pieces fit: everything from notebooks 
 
 # ---------------------------------------------------------------------------- 24–25 wrap-up
 s = content("Is the answer any good?", BLUE, "EVALUATION")
-text(s, 1.16, 2.0, 17.6, 0.9, "Changed the chunk size or the number of chunks? Measure whether it helped, instead of judging "
-     "answers by eye. Both scores below need no hand-written correct answer.", size=20, line=1.25)
+text(s, 1.16, 2.0, 17.6, 0.9, "You scored faithfulness in notebook 4. Changed the chunk size or the number of chunks? Measure "
+     "whether it helped. Neither score needs a hand-written correct answer.", size=20, line=1.25)
 for i, (name, question, formula, how) in enumerate([
         ("Faithfulness", "Is every claim backed by the retrieved chunks?", "supported claims ÷ all claims",
          "A judge model splits the answer into claims and checks each one against the chunks. "
@@ -654,7 +634,7 @@ for i, (name, question, formula, how) in enumerate([
     text(s, x + 0.4, 6.35, 7.8, 1.9, how, size=17, line=1.25, color=GREY)
 text(s, 1.16, 8.75, 17.6, 1.2, [[("In the template: ", {"bold": True}), ("both scores for every answer, a badge in the chat, "
      "and an evaluation app that compares configurations. Built on Ragas.", {})]], size=18, line=1.25)
-notes(s, "2 minutes. This is the 'basic RAG evaluation' from the description. Link it to the exercises: "
+notes(s, "1 to 2 minutes, a recap: they built faithfulness themselves in notebook 4. Relevance is new. Link it to the exercises: "
          "limit 2 versus 15, chunk size 300 versus 3000 are exactly the changes you would measure this way.")
 
 s = content("Where to go next", BLUE, "NEXT STEPS")
@@ -663,7 +643,7 @@ rows = [("Today", "The template"), ("PDFs only", "Also txt, md, csv and json"),
         ("Qdrant in memory, rebuilt on every start", "Qdrant server, ingested once, updated when files change"),
         ("Vector search only", "Hybrid search: vectors plus keyword matching"),
         ("[1] and a file name", "Citation format set in the config: title, file, page"),
-        ("You judge the answers by eye", "An evaluation app that scores answers")]
+        ("Faithfulness, one answer at a time", "Faithfulness and relevance for every answer, an app to compare setups")]
 for i, (today, template) in enumerate(rows):
     y = 2.15 + i * 0.86
     fill = BLUE if i == 0 else ("F2F1EE" if i % 2 else WHITE)
@@ -683,7 +663,7 @@ text(s, 1.67, 3.1, 9.5, 1.2, "We shape our next workshops around your answers. T
 rect(s, 1.67, 4.55, 1.25, 0.08, RED)
 image(s, "qr-feedback.png", 1.67, 4.97, w=2.92)
 text(s, 5.05, 5.6, 6, 2.2, [[("kisz@hpi.de", {"link": "mailto:kisz@hpi.de"})], [("hpi.de/kisz", {"link": "https://hpi.de/kisz"})],
-                            [("Felix Boelter", {"color": GREY, "size": 17})]], size=22, line=1.4)
+                            [("Felix Boelter  |  [Co-moderator]", {"color": GREY, "size": 17})]], size=22, line=1.4)
 rect(s, 1.67, 8.3, 7.4, 0.02, "D0D3D6")
 text(s, 1.67, 8.5, 8, 0.4, "KEEP GOING", size=15, bold=True, color=RED, spacing=3)
 text(s, 1.67, 8.95, 8.5, 1.0, [[(REPO, {"link": "https://" + REPO}), ("  ·  this workshop", {"color": GREY})],
