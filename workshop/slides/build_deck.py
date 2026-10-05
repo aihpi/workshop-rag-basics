@@ -229,6 +229,34 @@ rect(s, 12.3, 2.75, 6.25, 0.08, MUTED)
 text(s, 12.3, 3.1, 6.25, 1.2, "The printout stays with the workshop lead. Please hand it back at the end.", size=19, color=GREY)
 notes(s, "Pass the list round now, not at the end, or it gets lost on the way. Collect it again at the end.")
 
+# ---------------------------------------------------------------------------- agenda
+s = content("Agenda · 90 minutes", MUTED, None)
+AGENDA = [(0, 10, RED, "Slides", "Welcome, the AI Service Centre, why RAG"),
+          (10, 5, BLUE, "Slides", "Architecture and setup"),
+          (15, 10, YELLOW, "Notebook 1", "Talking to an LLM"),
+          (25, 13, YELLOW, "Slides + notebook 2", "From document to chunks · reading documents"),
+          (38, 7, BLUE, "Slides", "What we found so far · embeddings and vector search"),
+          (45, 13, YELLOW, "Notebook 3", "Search"),
+          (58, 16, YELLOW, "Slides + notebook 4", "Prompt and citations · retrieval-augmented generation"),
+          (74, 10, YELLOW, "Notebook 5", "Putting it together"),
+          (84, 6, RED, "Slides", "Where to go next, feedback")]
+for i, (start, minutes, colour, kind, what) in enumerate(AGENDA):
+    y = 2.05 + i * 0.74
+    text(s, 1.16, y, 1.2, 0.6, f"{start // 60}:{start % 60:02d}", size=20, bold=True, color=GREY, anchor=MSO_ANCHOR.MIDDLE)
+    rect(s, 2.5, y + 0.12, 0.36, 0.36, colour)
+    text(s, 3.15, y, 4.2, 0.6, kind, size=18, bold=True, anchor=MSO_ANCHOR.MIDDLE)
+    text(s, 7.4, y, 9.8, 0.6, what, size=18, anchor=MSO_ANCHOR.MIDDLE)
+    text(s, 17.3, y, 1.55, 0.6, f"{minutes} min", size=17, color=MUTED, align=PP_ALIGN.RIGHT, anchor=MSO_ANCHOR.MIDDLE)
+per_minute = 17.7 / 90
+for start, minutes, colour, _, _ in AGENDA:
+    rect(s, 1.16 + start * per_minute, 9.0, minutes * per_minute - 0.04, 0.42, colour)
+hands_on = 10 + 10 + 13 + 13 + 10  # the notebook times; the mixed blocks open with 3 min of slides
+text(s, 1.16, 9.6, 17.7, 0.5, [[("■ ", {"color": YELLOW}), (f"notebooks, hands-on: {hands_on} min     ", {}),
+                                ("■ ", {"color": BLUE}), ("theory     ", {}), ("■ ", {"color": RED}), ("welcome and wrap-up", {})]],
+     size=16, color=GREY)
+notes(s, "The plan for today: theory in small doses, most of the time in the notebooks. "
+         "The two mixed blocks start with 3 minutes of slides, then the notebook.")
+
 # ---------------------------------------------------------------------------- 3–7 KISZ
 s = divider("01", "AI Service Centre\nBerlin-Brandenburg", "Who we are and what you can use.", RED)
 notes(s, "Transition: who we are, and how you can keep working with us. About 5 minutes for slides 3 to 7.")
@@ -475,39 +503,39 @@ s = notebook(2, "Reading documents", 10,
                       "assay for screening aptamer-protein interactions based on microbeads …", 2.1)])
 notes(s, "10 minutes. Docling takes about a minute for the three papers; talk through the Markdown while it runs.")
 
-s = content("Three questions", YELLOW, "CHECKPOINT", logo=False, background=GREY)
+s = content("What we found so far", YELLOW, "CHECKPOINT", logo=False, background=GREY)
 rect(s, 13.0, 0.85, 4.9, 1.1, YELLOW)
-text(s, 13.25, 0.85, 4.5, 1.1, "Vote by show of hands.\nAnswers on the next slide.", size=17, anchor=MSO_ANCHOR.MIDDLE)
-QUIZ = [("What is in the vector database?", ["The complete PDF files", "Text chunks as vectors", "The language model's weights"]),
-        ("Where does a chunk end in our notebook?", ["After 1000 characters, overlapping the next by 200",
-                                                     "At the end of each sentence", "At the next heading"]),
-        ("Is the model trained on your data?", ["Yes, with every question", "No, the chunks go into the prompt",
-                                                "Only on the first upload"])]
-for i, (question, options) in enumerate(QUIZ):
+text(s, 13.25, 0.85, 4.5, 1.1, "Ask the room first,\nthen show the finding.", size=17, anchor=MSO_ANCHOR.MIDDLE)
+FINDINGS = [("Notebook 1", "Did the model know the Kage paper?",
+             "No, but it answered anyway: quantum dots, 2.5, 10 and 25 ns. The paper used organic dyes and quantum dots, "
+             "1.7 to 22.6 ns. A model doesn't know your documents, and doesn't say so."),
+            ("Notebook 2", "What did Docling do with the tables?",
+             "It kept all 5 tables in the three papers as Markdown tables, with their rows and columns, ready to be "
+             "searched like any other text."),
+            ("Notebook 2 · your turn", "How big should a chunk be?", None)]
+for i, (where, question, finding) in enumerate(FINDINGS):
     x = 1.16 + i * 6.12
     rect(s, x, 2.5, 5.46, 0.08, YELLOW)
-    text(s, x, 2.85, 5.5, 0.4, f"QUESTION {i + 1}", size=15, bold=True, color="D0D3D6", spacing=3)
+    text(s, x, 2.85, 5.5, 0.4, where.upper(), size=15, bold=True, color="D0D3D6", spacing=3)
     text(s, x, 3.35, 5.4, 1.3, question, size=26, bold=True, color=WHITE, line=1.05)
-    text(s, x, 4.9, 5.4, 4, [[(f"{'ABC'[j]}   {o}", {"space_after": 10})] for j, o in enumerate(options)], size=19, color=WHITE)
-notes(s, "4 minutes for both slides. Ask the room, by show of hands, then reveal.")
-
-s = content("Answers", YELLOW, "CHECKPOINT", logo=False, background=GREY)
-answers = [("B", "Chunks, each turned into a vector. The model itself stays unchanged."),
-           ("A", "Simple and the same for every document. GrundschutzKI cuts at headings instead, so a chunk keeps its title."),
-           ("B", "RAG does not change the model. The chunks it finds are added to the question.")]
-for i, ((question, _), (letter, why)) in enumerate(zip(QUIZ, answers)):
-    x = 1.16 + i * 6.12
-    rect(s, x, 2.5, 5.46, 0.08, YELLOW)
-    text(s, x, 2.85, 5.5, 0.4, f"QUESTION {i + 1}", size=15, bold=True, color="D0D3D6", spacing=3)
-    text(s, x, 3.35, 5.4, 1.3, question, size=26, bold=True, color=WHITE, line=1.05)
-    rect(s, x, 4.85, 5.46, 2.6, WHITE)
-    text(s, x + 0.3, 5.05, 5, 0.5, [[(letter, {"color": RED, "size": 26, "bold": True}), ("   correct", {"bold": True})]], size=17)
-    text(s, x + 0.3, 5.7, 4.9, 1.7, why, size=17, line=1.25)
-rect(s, 1.16, 8.0, 17.7, 1.3, WHITE)
-text(s, 1.5, 8.0, 3, 1.3, "TAKEAWAY", size=15, bold=True, color=MUTED, spacing=3, anchor=MSO_ANCHOR.MIDDLE)
-text(s, 4.2, 8.0, 14.4, 1.3, "The chunks sit in the database as vectors. The language model itself is never touched.",
+    rect(s, x, 4.85, 5.46, 3.75, WHITE)
+    if finding:
+        text(s, x + 0.3, 5.1, 4.9, 3.3, finding, size=20, line=1.3)
+        continue
+    for r, (size, count, cut) in enumerate([("Size", "Chunks", "End mid-table"), ("300", "628", "17"),
+                                            ("1000", "197", "5"), ("3000", "69", "0")]):
+        bold = r == 0
+        for c, value in enumerate((size, count, cut)):
+            text(s, x + 0.3 + c * 1.55, 5.1 + r * 0.5, 1.6 if c < 2 else 2.0, 0.45, value, size=16 if bold else 18,
+                 bold=bold, color=MUTED if bold else INK)
+    text(s, x + 0.3, 7.25, 4.9, 1.3, "Small chunks find the exact passage but lose context; big ones keep tables whole "
+         "but blur the match.", size=15, line=1.25, color=GREY)
+rect(s, 1.16, 9.0, 17.7, 1.1, WHITE)
+text(s, 1.5, 9.0, 3, 1.1, "NEXT", size=15, bold=True, color=MUTED, spacing=3, anchor=MSO_ANCHOR.MIDDLE)
+text(s, 3.4, 9.0, 15.2, 1.1, "We have good chunks. How do we find the right ones for a question? Embeddings.",
      size=20, anchor=MSO_ANCHOR.MIDDLE)
-notes(s, "Reveal the answers, ask whether anyone picked differently.")
+notes(s, "4 minutes. Ask each question to the room before pointing at the answer. The numbers are real: "
+         "the notebook 1 answer from a test run (it varies a little), the chunk counts from the three papers.")
 
 s = content("Embeddings and vector search", BLUE, "BASICS")
 diagram("embeddings", 1.16, 2.1, 7.4, s)

@@ -43,7 +43,7 @@ The slides are in [`slides/`](slides/): [`rag-workshop.pdf`](slides/rag-workshop
 | 0:10 | Slides | Architecture and setup |
 | 0:15 | `01_chat.ipynb` | Talking to an LLM; your first Chainlit app |
 | 0:25 | Slides + `02_documents.ipynb` | Reading PDFs with Docling; chunks |
-| 0:38 | Slides | Quiz; embeddings and vector search |
+| 0:38 | Slides | What we found so far; embeddings and vector search |
 | 0:45 | `03_search.ipynb` | Embeddings; Qdrant; a search engine |
 | 0:58 | Slides + `04_rag.ipynb` | Answering from the papers, with citations |
 | 1:14 | `05_together.ipynb` | All pieces in one chatbot; your own PDFs |
