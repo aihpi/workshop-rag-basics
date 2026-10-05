@@ -44,12 +44,12 @@ infrastructure in Potsdam. Use test or public documents only.
 
 | Time | Session | |
 |---|---|---|
-| 0:00 | Welcome, route, setup | The install runs while we talk |
-| 0:15 | `01_chat.ipynb` | Talking to an LLM: the confident answer |
-| 0:28 | `02_documents.ipynb` | Reading PDFs with Docling; chunks |
-| 0:41 | `03_search.ipynb` | Embeddings, Qdrant, a search engine |
-| 0:54 | `04_rag.ipynb` | Answers with citations; which claims are backed |
-| 1:10 | `05_together.ipynb` | Your own PDF; what would break on your collection; next steps |
+| 0:00 | Welcome, the AI Service Centre, setup | The install runs while we talk |
+| 0:17 | `01_chat.ipynb` | Talking to an LLM: the confident answer |
+| 0:30 | `02_documents.ipynb` | Reading PDFs with Docling; chunks |
+| 0:43 | `03_search.ipynb` | Embeddings, Qdrant, a search engine |
+| 0:56 | `04_rag.ipynb` | Answers with citations; which claims are backed |
+| 1:12 | `05_together.ipynb` | Your own PDF; what would break on your collection; next steps |
 | 1:30 | End | |
 
 The slides are in [`slides/`](slides/): [`rag-workshop.pdf`](slides/rag-workshop.pdf) to present,
