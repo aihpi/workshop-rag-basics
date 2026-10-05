@@ -503,39 +503,51 @@ s = notebook(2, "Reading documents", 10,
                       "assay for screening aptamer-protein interactions based on microbeads …", 2.1)])
 notes(s, "10 minutes. Docling takes about a minute for the three papers; talk through the Markdown while it runs.")
 
-s = content("What we found so far", YELLOW, "CHECKPOINT", logo=False, background=GREY)
-rect(s, 13.0, 0.85, 4.9, 1.1, YELLOW)
-text(s, 13.25, 0.85, 4.5, 1.1, "Ask the room first,\nthen show the finding.", size=17, anchor=MSO_ANCHOR.MIDDLE)
-FINDINGS = [("Notebook 1", "Did the model know the Kage paper?",
-             "No, but it answered anyway: quantum dots, 2.5, 10 and 25 ns. The paper used organic dyes and quantum dots, "
-             "1.7 to 22.6 ns. A model doesn't know your documents, and doesn't say so."),
-            ("Notebook 2", "What did Docling do with the tables?",
-             "It kept all 5 tables in the three papers as Markdown tables, with their rows and columns, ready to be "
-             "searched like any other text."),
-            ("Notebook 2 · your turn", "How big should a chunk be?", None)]
-for i, (where, question, finding) in enumerate(FINDINGS):
-    x = 1.16 + i * 6.12
-    rect(s, x, 2.5, 5.46, 0.08, YELLOW)
-    text(s, x, 2.85, 5.5, 0.4, where.upper(), size=15, bold=True, color="D0D3D6", spacing=3)
-    text(s, x, 3.35, 5.4, 1.3, question, size=26, bold=True, color=WHITE, line=1.05)
-    rect(s, x, 4.85, 5.46, 3.75, WHITE)
-    if finding:
-        text(s, x + 0.3, 5.1, 4.9, 3.3, finding, size=20, line=1.3)
-        continue
-    for r, (size, count, cut) in enumerate([("Size", "Chunks", "End mid-table"), ("300", "628", "17"),
-                                            ("1000", "197", "5"), ("3000", "69", "0")]):
-        bold = r == 0
-        for c, value in enumerate((size, count, cut)):
-            text(s, x + 0.3 + c * 1.55, 5.1 + r * 0.5, 1.6 if c < 2 else 2.0, 0.45, value, size=16 if bold else 18,
-                 bold=bold, color=MUTED if bold else INK)
-    text(s, x + 0.3, 7.25, 4.9, 1.3, "Small chunks find the exact passage but lose context; big ones keep tables whole "
-         "but blur the match.", size=15, line=1.25, color=GREY)
-rect(s, 1.16, 9.0, 17.7, 1.1, WHITE)
-text(s, 1.5, 9.0, 3, 1.1, "NEXT", size=15, bold=True, color=MUTED, spacing=3, anchor=MSO_ANCHOR.MIDDLE)
-text(s, 3.4, 9.0, 15.2, 1.1, "We have good chunks. How do we find the right ones for a question? Embeddings.",
-     size=20, anchor=MSO_ANCHOR.MIDDLE)
-notes(s, "4 minutes. Ask each question to the room before pointing at the answer. The numbers are real: "
-         "the notebook 1 answer from a test run (it varies a little), the chunk counts from the three papers.")
+CHECKPOINT = [  # where, question, options, correct letter, why (numbers from the three papers and a test run)
+    ("Notebook 1", "Asked about the Kage paper, what did the model do?",
+     ["Said it doesn't know the paper", "Answered confidently, with the wrong dyes and lifetimes", "Quoted the paper correctly"],
+     "B", "It said quantum dots, 2.5, 10 and 25 ns. The paper used organic dyes and quantum dots, 1.7 to 22.6 ns. "
+          "A model doesn't know your documents, and doesn't say so."),
+    ("Notebook 2", "What happened to the tables when Docling read the papers?",
+     ["They were dropped", "They became loose lines of numbers", "They stayed tables, in Markdown"],
+     "C", "All 5 tables in the three papers came through with their rows and columns, searchable like any other text."),
+    ("Notebook 2 · your turn", "What happens with smaller chunks, 300 characters instead of 1000?",
+     ["Fewer chunks, and tables stay whole", "More chunks, and more of them cut through a table", "Nothing changes"],
+     "B", "628 instead of 197 chunks, and 17 instead of 5 end in the middle of a table row. At 3000: 69 chunks, none."),
+]
+
+
+def checkpoint(title, reveal):
+    s = content(title, YELLOW, "CHECKPOINT", logo=False, background=GREY)
+    if not reveal:
+        rect(s, 13.0, 0.85, 4.9, 1.1, YELLOW)
+        text(s, 13.25, 0.85, 4.5, 1.1, "Vote by show of hands.\nAnswers on the next slide.", size=17, anchor=MSO_ANCHOR.MIDDLE)
+    for i, (where, question, options, letter, why) in enumerate(CHECKPOINT):
+        x = 1.16 + i * 6.12
+        rect(s, x, 2.5, 5.46, 0.08, YELLOW)
+        text(s, x, 2.85, 5.5, 0.4, where.upper(), size=15, bold=True, color="D0D3D6", spacing=3)
+        text(s, x, 3.35, 5.4, 1.4, question, size=24, bold=True, color=WHITE, line=1.05)
+        if not reveal:
+            text(s, x, 5.0, 5.4, 4, [[(f"{'ABC'[j]}   {o}", {"space_after": 12})] for j, o in enumerate(options)],
+                 size=19, color=WHITE, line=1.2)
+            continue
+        rect(s, x, 4.95, 5.46, 3.6, WHITE)
+        text(s, x + 0.3, 5.15, 5, 0.5, [[(letter, {"color": RED, "size": 26, "bold": True}),
+                                          (f"   {options['ABC'.index(letter)]}", {"bold": True})]], size=17)
+        text(s, x + 0.3, 6.3, 4.9, 2.2, why, size=17, line=1.25)
+    if reveal:
+        rect(s, 1.16, 9.0, 17.7, 1.1, WHITE)
+        text(s, 1.5, 9.0, 3, 1.1, "NEXT", size=15, bold=True, color=MUTED, spacing=3, anchor=MSO_ANCHOR.MIDDLE)
+        text(s, 3.4, 9.0, 15.2, 1.1, "We have good chunks. How do we find the right ones for a question? Embeddings.",
+             size=20, anchor=MSO_ANCHOR.MIDDLE)
+    return s
+
+
+s = checkpoint("What did you find?", reveal=False)
+notes(s, "4 minutes for both slides. Read the questions out, let the room vote by show of hands.")
+s = checkpoint("What we found", reveal=True)
+notes(s, "Reveal, ask whether anyone saw something different. The notebook 1 answer varies a little from run to run; "
+         "the chunk numbers are measured on the three papers.")
 
 s = content("Embeddings and vector search", BLUE, "BASICS")
 diagram("embeddings", 1.16, 2.1, 7.4, s)
