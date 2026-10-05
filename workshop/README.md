@@ -34,16 +34,21 @@ uv run jupyter lab
 
 Open the notebooks in order. The chatbot runs at http://localhost:8000.
 
+The slides are in [`slides/`](slides/): [`rag-workshop.pdf`](slides/rag-workshop.pdf) to present,
+[`rag-workshop.pptx`](slides/rag-workshop.pptx) with speaker notes.
+
 | Time | | |
 |---|---|---|
-| 0:00 | Theory | What RAG is, and why |
+| 0:00 | Slides | Welcome, the AI Service Centre, why RAG |
+| 0:10 | Slides | Architecture and setup |
 | 0:15 | `01_chat.ipynb` | Talking to an LLM; your first Chainlit app |
-| 0:30 | `02_documents.ipynb` | Reading PDFs with Docling; chunks |
-| 0:45 | Theory | Embeddings and vector search |
-| 0:55 | `03_search.ipynb` | Embeddings; Qdrant; a search engine |
-| 1:15 | `04_rag.ipynb` | Answering from the papers, with citations |
-| 1:35 | `05_together.ipynb` | All pieces in one chatbot; your own PDFs |
-| 1:45 | End | |
+| 0:25 | Slides + `02_documents.ipynb` | Reading PDFs with Docling; chunks |
+| 0:38 | Slides | Quiz; embeddings and vector search |
+| 0:45 | `03_search.ipynb` | Embeddings; Qdrant; a search engine |
+| 0:58 | Slides + `04_rag.ipynb` | Answering from the papers, with citations |
+| 1:14 | `05_together.ipynb` | All pieces in one chatbot; your own PDFs |
+| 1:24 | Slides | Where to go next, feedback |
+| 1:30 | End | |
 
 Each notebook needs the files the earlier ones save (`chunks.json`, `index.json`), so run
 them in order. The solutions to the exercises are folded away under each exercise list.
