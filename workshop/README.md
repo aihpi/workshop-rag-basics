@@ -10,8 +10,8 @@ You need [uv](https://docs.astral.sh/uv/getting-started/installation/) (it insta
 for you) and Git.
 
 ```bash
-git clone <this repository>
-cd <repository>/workshop
+git clone https://github.com/aihpi/workshop-rag-basics.git
+cd workshop-rag-basics/workshop
 uv sync
 cp .env.example .env
 ```
