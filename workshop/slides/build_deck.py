@@ -205,10 +205,10 @@ def notebook(number, title, minutes, learn, turn, exchange):
 # ---------------------------------------------------------------------------- 1 title
 s = prs.slides.add_slide(BLANK)
 text(s, 1.67, 2.24, 15, 0.4, "[EVENT]", size=19.5, bold=True, color="DC640D", spacing=4)
-text(s, 1.67, 2.82, 15, 1.1, "BUILD A RAG CHATBOT", size=69, bold=True, color=GREY)
-text(s, 1.67, 4.11, 15, 0.7, "AI-assisted research on your own documents", size=34.5, color=RED)
+text(s, 1.67, 2.82, 15, 1.1, "HANDS-ON RAG", size=69, bold=True, color=GREY)
+text(s, 1.67, 4.11, 15, 0.7, "Build your own document Q&A system", size=34.5, color=RED)
 rect(s, 1.67, 5.2, 1.25, 0.08, RED)
-text(s, 1.67, 5.76, 14, 1.1, [[("[Presenter]", {"size": 22.5})],
+text(s, 1.67, 5.76, 14, 1.1, [[("Felix Boelter", {"size": 22.5})],
                               [("AI Service Centre Berlin-Brandenburg  |  [Date]", {"size": 22.5, "color": GREY})]])
 image(s, "logo-kisz.png", 16.45, 0.74, w=2.8)
 image(s, "logo-bmftr.png", 16.41, 1.98, w=2.8)
@@ -239,7 +239,7 @@ AGENDA = [(0, 10, RED, "Slides", "Welcome, the AI Service Centre, why RAG"),
           (45, 13, YELLOW, "Notebook 3", "Search"),
           (58, 16, YELLOW, "Slides + notebook 4", "Prompt and citations · retrieval-augmented generation"),
           (74, 10, YELLOW, "Notebook 5", "Putting it together"),
-          (84, 6, RED, "Slides", "Where to go next, feedback")]
+          (84, 6, RED, "Slides", "Evaluation, where to go next, feedback")]
 for i, (start, minutes, colour, kind, what) in enumerate(AGENDA):
     y = 2.05 + i * 0.74
     text(s, 1.16, y, 1.2, 0.6, f"{start // 60}:{start % 60:02d}", size=20, bold=True, color=GREY, anchor=MSO_ANCHOR.MIDDLE)
@@ -256,6 +256,26 @@ text(s, 1.16, 9.6, 17.7, 0.5, [[("■ ", {"color": YELLOW}), (f"notebooks, hands
      size=16, color=GREY)
 notes(s, "The plan for today: theory in small doses, most of the time in the notebooks. "
          "The two mixed blocks start with 3 minutes of slides, then the notebook.")
+
+# ---------------------------------------------------------------------------- about me
+s = content("About me", MUTED, None)
+photo = ASSETS / "presenter.jpg"
+if photo.exists():
+    image(s, photo, 1.16, 2.2, w=4.6, h=4.6)
+else:  # drop an 800×800 headshot at assets/presenter.jpg and rebuild
+    rect(s, 1.16, 2.2, 4.6, 4.6, SAND)
+    text(s, 1.16, 2.2, 4.6, 4.6, "Photo\nassets/presenter.jpg", size=17, color=MUTED, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+text(s, 6.4, 2.15, 12, 0.7, "Felix Boelter", size=34, bold=True)
+text(s, 6.4, 2.95, 12, 0.5, "AI Engineer · Hasso-Plattner-Institut · AI Service Centre Berlin-Brandenburg", size=19, color=RED)
+text(s, 6.4, 3.85, 12.4, 5, [[(f"•  {item}", {"space_after": 10})] for item in [
+    "Builds LLM inference infrastructure on Kubernetes",
+    "Develops RAG and agentic AI systems with public-sector and SME partners",
+    "Teaches the stack in hands-on workshops and a free openHPI course with over 5,000 learners",
+    "Studied AI at USI Lugano, Switzerland, Magna Cum Laude; now researching model compression"]], size=20, line=1.2)
+image(s, qr("https://www.linkedin.com/in/felixboelter/", "qr-linkedin"), 1.16, 7.3, w=1.9)
+text(s, 3.3, 7.75, 6, 0.9, [[("LinkedIn", {"bold": True})],
+                            [("linkedin.com/in/felixboelter", {"link": "https://www.linkedin.com/in/felixboelter/", "color": GREY})]], size=17)
+notes(s, "One minute: who I am, and that the code from today is yours to keep.")
 
 # ---------------------------------------------------------------------------- 3–7 KISZ
 s = divider("01", "AI Service Centre\nBerlin-Brandenburg", "Who we are and what you can use.", RED)
@@ -615,6 +635,28 @@ notes(s, "10 minutes. Remind them how the pieces fit: everything from notebooks 
          "Only test documents, nothing confidential, when they attach their own PDF.")
 
 # ---------------------------------------------------------------------------- 24–25 wrap-up
+s = content("Is the answer any good?", BLUE, "EVALUATION")
+text(s, 1.16, 2.0, 17.6, 0.9, "Changed the chunk size or the number of chunks? Measure whether it helped, instead of judging "
+     "answers by eye. Both scores below need no hand-written correct answer.", size=20, line=1.25)
+for i, (name, question, formula, how) in enumerate([
+        ("Faithfulness", "Is every claim backed by the retrieved chunks?", "supported claims ÷ all claims",
+         "A judge model splits the answer into claims and checks each one against the chunks. "
+         "0.5 means half the claims have no source."),
+        ("Relevance", "Does the answer address the question?", "similarity(questions from the answer, real question)",
+         "A judge model writes the questions this answer would fit; their embeddings are compared with "
+         "the question that was asked.")]):
+    x = 1.16 + i * 9.0
+    rect(s, x, 3.35, 8.6, 5.0, "F2F1EE")
+    text(s, x + 0.4, 3.6, 7.9, 0.6, name, size=28, bold=True, color=BLUE)
+    text(s, x + 0.4, 4.3, 7.9, 0.9, question, size=20, bold=True)
+    rect(s, x + 0.4, 5.25, 7.8, 0.8, WHITE)
+    text(s, x + 0.6, 5.25, 7.5, 0.8, formula, size=17, font="Courier New", anchor=MSO_ANCHOR.MIDDLE)
+    text(s, x + 0.4, 6.35, 7.8, 1.9, how, size=17, line=1.25, color=GREY)
+text(s, 1.16, 8.75, 17.6, 1.2, [[("In the template: ", {"bold": True}), ("both scores for every answer, a badge in the chat, "
+     "and an evaluation app that compares configurations. Built on Ragas.", {})]], size=18, line=1.25)
+notes(s, "2 minutes. This is the 'basic RAG evaluation' from the description. Link it to the exercises: "
+         "limit 2 versus 15, chunk size 300 versus 3000 are exactly the changes you would measure this way.")
+
 s = content("Where to go next", BLUE, "NEXT STEPS")
 rows = [("Today", "The template"), ("PDFs only", "Also txt, md, csv and json"),
         ("Fixed 1000-character chunks", "Structure-aware chunkers, chosen per data source in a config file"),
@@ -641,7 +683,7 @@ text(s, 1.67, 3.1, 9.5, 1.2, "We shape our next workshops around your answers. T
 rect(s, 1.67, 4.55, 1.25, 0.08, RED)
 image(s, "qr-feedback.png", 1.67, 4.97, w=2.92)
 text(s, 5.05, 5.6, 6, 2.2, [[("kisz@hpi.de", {"link": "mailto:kisz@hpi.de"})], [("hpi.de/kisz", {"link": "https://hpi.de/kisz"})],
-                            [("[Presenter]", {"color": GREY, "size": 17})]], size=22, line=1.4)
+                            [("Felix Boelter", {"color": GREY, "size": 17})]], size=22, line=1.4)
 rect(s, 1.67, 8.3, 7.4, 0.02, "D0D3D6")
 text(s, 1.67, 8.5, 8, 0.4, "KEEP GOING", size=15, bold=True, color=RED, spacing=3)
 text(s, 1.67, 8.95, 8.5, 1.0, [[(REPO, {"link": "https://" + REPO}), ("  ·  this workshop", {"color": GREY})],

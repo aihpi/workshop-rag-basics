@@ -1,4 +1,4 @@
-# Workshop: Build a RAG chatbot
+# Hands-On RAG: Build Your Own Document Q&A System
 
 You build a chatbot that answers questions about three scientific papers and links every
 answer to the page it comes from. Five short notebooks build it piece by piece, and you watch
@@ -6,8 +6,9 @@ it change in your browser. Each notebook ends with small exercises that you do i
 
 ## Before the workshop
 
-You need [uv](https://docs.astral.sh/uv/getting-started/installation/) (it installs Python
-for you) and Git.
+Work through the setup guide at [aihpi/workshop-getting-started](https://github.com/aihpi/workshop-getting-started/)
+first. Of what it installs, this workshop needs [uv](https://docs.astral.sh/uv/getting-started/installation/)
+(it installs Python for you) and Git.
 
 ```bash
 git clone https://github.com/aihpi/workshop-rag-basics.git
