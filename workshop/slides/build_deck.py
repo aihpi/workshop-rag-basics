@@ -472,7 +472,13 @@ s = vote("Would you rely on it?", "Hands up.\nRemember your letter.",
          [("Notebook 1", "The model answered the Kage question. Would you rely on this answer?",
            ["yes, as it is", "yes, after a quick check", "no"])])
 notes(s, "Rely on it means, for example, cite it in your report or pass it on as a fact. Count hands per letter, write "
-         "the numbers on the whiteboard. No reveal, no hint: notebook 4 comes back to it.")
+         "the numbers on the whiteboard. No reveal, no hint: notebook 4 comes back to it.\n\n"
+         "If most say A: 'It sounds convincing, doesn't it? Keep that in mind.' Nothing more; the reveal does the rest.\n"
+         "If most say B: ask 'What would your quick check be?' Collect two or three answers on the whiteboard. They "
+         "usually are: google it (then you still have to read the paper), ask again (another answer, still no source), "
+         "look it up in the paper (which page?). A quick check without a source is not quick.\n"
+         "If most say C: ask 'Then what is it good for?' Without a source you can't use the answer at all. RAG is what "
+         "makes it usable.")
 
 # ---------------------------------------------------------------------------- 13 why
 s = content("Half right, and you can't\ntell which half", RED, "MOTIVATION")
@@ -587,10 +593,14 @@ text(s, 12.3, 5.65, 7.2, 1.3, "Which part of the system knows the page number of
      color=WHITE, line=1.1)
 text(s, 12.3, 7.15, 7.2, 2.4, [[(f"{l}   {o}", {"space_after": 10})] for l, o in
                                [("A", "the LLM"), ("B", "the payload in Qdrant"), ("C", "the embedding model")]], size=21, color=WHITE)
-notes(s, "Go back to the vote on the whiteboard: most of you would have relied on it. The ✗ lines are what nobody "
-         "could see; one claim (quantum dots) was right, and the paper box shows the real values. You only know once you "
-         "check the source, and RAG makes that one click. Their own run will show different claims and a different score. Then the question: B, written "
-         "at ingestion from Docling's page numbers (notebook 3, slide 18). Ask: do we see how far we've come?")
+notes(s, "Go back to the vote on the whiteboard. The ✗ lines are what nobody could see; one claim (quantum dots) "
+         "was right, and the paper box shows the real values. You only know once you check the source, and RAG makes "
+         "that one click. Their own run will show different claims and a different score.\n\n"
+         "If most said A: five of six claims were invented, and you would have used them.\n"
+         "If most said B: point at the quick checks on the whiteboard. This click is the quick check.\n"
+         "If most said C: right instinct, and now there is a way to check.\n\n"
+         "Then the page-number question on the right. Answer B, the payload in Qdrant: written at ingestion from "
+         "Docling's page numbers (notebook 3, slide 18). Ask: do we see how far we've come?")
 
 # ---------------------------------------------------------------------------- 21 notebook 5
 s = content("Putting it together", YELLOW, "HANDS-ON")
