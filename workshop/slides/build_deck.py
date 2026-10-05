@@ -462,15 +462,17 @@ notes(s, "Key on the whiteboard now. check_setup.py downloads about 500 MB of Do
 s = notebook(1, "Talking to an LLM", 6,
              ["Connect to the model through the gateway", "Ask about a detail from one of our papers",
               "Build a chatbot that remembers and streams"],
-             ["Personality: change the system prompt", "Bonus: stopwatch, you'll want it in notebook 4"],
+             ["Personality: change the system prompt", "Bonus: show how long each answer took"],
              [("you", "In Kage et al. (2018), what were the lifetime-encoded beads loaded with?", 1.0),
-              ("step", "The model answers. Is it right?", 0.45)])
-notes(s, "S1. Don't say whether the answer is right. They decide in five minutes.")
+              ("step", "The model answers. Would you rely on it?", 0.45)])
+notes(s, "S1. Don't say whether the answer is right, and don't hint. They decide in five minutes.")
 
 # ---------------------------------------------------------------------------- 12 the vote
-s = vote("Was it right?", "Hands up.\nRemember your letter.",
-         [("Notebook 1", "The model answered the Kage question. Was it ...", ["right", "wrong", "partly right", "can't tell"])])
-notes(s, "Count hands per letter, write the numbers on the whiteboard. No reveal: notebook 4 tells us.")
+s = vote("Would you rely on it?", "Hands up.\nRemember your letter.",
+         [("Notebook 1", "The model answered the Kage question. Would you rely on this answer?",
+           ["yes, as it is", "yes, after a quick check", "no"])])
+notes(s, "Rely on it means, for example, cite it in your report or pass it on as a fact. Count hands per letter, write "
+         "the numbers on the whiteboard. No reveal, no hint: notebook 4 comes back to it.")
 
 # ---------------------------------------------------------------------------- 13 why
 s = content("Half right, and you can't\ntell which half", RED, "MOTIVATION")
@@ -487,7 +489,8 @@ for i, (colour, head, body) in enumerate(cols):
     text(s, x, 2.85, 5.5, 0.4, f"0{i + 1}", size=19, bold=True, color=MUTED, spacing=3)
     text(s, x, 3.35, 5.5, 1.2, head, size=28, bold=True, line=1.05)
     text(s, x, 4.75, 5.3, 4.5, body, size=22, line=1.3)
-notes(s, "Most of you voted C or D. That is the honest answer, and it is the problem. Notebook 4 tells us which half.")
+notes(s, "Whatever you voted: you had no way to know. It sounded right, and to check it you would have had to read the "
+         "paper. That is the problem. Notebook 4 tells us which half was right.")
 
 # ---------------------------------------------------------------------------- 14 notebook 2
 s = content("Reading documents", YELLOW, "HANDS-ON")
@@ -561,7 +564,7 @@ notes(s, "S4. Same question as notebook 1. Let them click a source. Strict-or-no
 
 # ---------------------------------------------------------------------------- 20 which half
 s = content("Which half?", YELLOW, "CHECKPOINT", logo=False, background=GREY)
-rect(s, 1.16, 2.3, 10.4, 5.9, WHITE)
+rect(s, 1.16, 2.3, 10.4, 5.3, WHITE)
 text(s, 1.5, 2.5, 9.8, 0.4, "THE NOTEBOOK 1 ANSWER, JUDGED IN NOTEBOOK 4 (ONE RUN)", size=14, bold=True, color=MUTED, spacing=2)
 JUDGED = [(True, "The beads were loaded with quantum dots (QDs)."),
           (False, "Three different types of quantum dots, to create distinct lifetime signatures."),
@@ -571,14 +574,22 @@ JUDGED = [(True, "The beads were loaded with quantum dots (QDs)."),
           (False, "The beads were used as fiducial markers to correct for drift during imaging.")]
 text(s, 1.5, 3.05, 9.8, 5.6, [[("✓  " if ok else "✗  ", {"bold": True, "color": "2F9E62" if ok else RED}), (claim, {})]
                               for ok, claim in JUDGED], size=18, line=1.45)
-text(s, 1.5, 7.2, 9.8, 0.7, [[("faithfulness  ", {"color": GREY}), ("0.17", {"bold": True, "size": 26})]], size=20,
+text(s, 1.5, 6.75, 9.8, 0.7, [[("faithfulness  ", {"color": GREY}), ("0.17", {"bold": True, "size": 26})]], size=20,
      font="Courier New")
-text(s, 12.3, 2.3, 7.2, 1.6, "Which part of the system knows the page number of a chunk?", size=26, bold=True,
+rect(s, 1.16, 7.95, 10.4, 1.25, YELLOW)
+text(s, 1.5, 7.95, 9.8, 1.25, [[("With RAG you don't read the paper either: ", {"bold": True}),
+                                ("click [1], and page 3 opens.", {})]], size=20, anchor=MSO_ANCHOR.MIDDLE)
+rect(s, 12.3, 2.3, 7.2, 2.9, WHITE)
+text(s, 12.6, 2.5, 6.7, 0.4, "WHAT THE PAPER SAYS · TABLE 1, PAGE 3", size=14, bold=True, color=MUTED, spacing=2)
+text(s, 12.6, 3.1, 6.7, 2.0, [[("Organic dyes in PMMA beads: ", {}), ("1.7 to 7.9 ns", {"bold": True})],
+                              [("Quantum dots in melamine beads: ", {}), ("22.6 ns", {"bold": True})]], size=19, line=1.5)
+text(s, 12.3, 5.65, 7.2, 1.3, "Which part of the system knows the page number of a chunk?", size=24, bold=True,
      color=WHITE, line=1.1)
-text(s, 12.3, 4.4, 7.2, 3, [[(f"{l}   {o}", {"space_after": 12})] for l, o in
-                            [("A", "the LLM"), ("B", "the payload in Qdrant"), ("C", "the embedding model")]], size=22, color=WHITE)
-notes(s, "Go back to the vote on the whiteboard. The ✗ lines are the half nobody could see; one claim (quantum dots) "
-         "was right. Their own run will show different claims and a different score. Then the question: B, written "
+text(s, 12.3, 7.15, 7.2, 2.4, [[(f"{l}   {o}", {"space_after": 10})] for l, o in
+                               [("A", "the LLM"), ("B", "the payload in Qdrant"), ("C", "the embedding model")]], size=21, color=WHITE)
+notes(s, "Go back to the vote on the whiteboard: most of you would have relied on it. The ✗ lines are what nobody "
+         "could see; one claim (quantum dots) was right, and the paper box shows the real values. You only know once you "
+         "check the source, and RAG makes that one click. Their own run will show different claims and a different score. Then the question: B, written "
          "at ingestion from Docling's page numbers (notebook 3, slide 18). Ask: do we see how far we've come?")
 
 # ---------------------------------------------------------------------------- 21 notebook 5
