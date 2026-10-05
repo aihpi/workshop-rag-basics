@@ -4,10 +4,10 @@ version = "0.1.0"
 requires-python = ">=3.11"
 dependencies = [
     "chainlit==2.11.0",
+    "docling>=2.118.0",  # below this, docling-parse leaks ligatures as glyph names
+    "ipywidgets",  # progress bars in the notebook
     "jupyterlab",
     "openai>=1.0",
-    "pypdf",
-    "fonttools",  # pypdf needs it for some fonts in the sample papers, else it warns
     "python-dotenv",
     "qdrant-client>=1.14.1",
 ]

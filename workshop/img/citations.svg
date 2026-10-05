@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 232" width="800" role="img" aria-label="The answer cites [1]. [1] is the first search hit, whose payload says Kage_2018_SciReports.pdf, page 2. Chainlit's cl.Pdf element opens that file at page 2.">
+<title>The answer cites [1]. [1] is the first search hit, whose payload says Kage_2018_SciReports.pdf, page 2. Chainlit's cl.Pdf element opens that file at page 2.</title>
+<style>
+text { font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #1f2933; }
+.title { font-size: 14px; font-weight: 600; }
+.sub { font-size: 12px; fill: #5f6b7a; }
+.lane { font-size: 11px; font-weight: 700; letter-spacing: .08em; fill: #5f6b7a; }
+.label { font-size: 12px; fill: #5f6b7a; }
+.mono { font-family: Menlo, Consolas, "DejaVu Sans Mono", monospace; font-size: 12px; }
+</style>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<path d="M0,0 L10,5 L0,10 z" fill="#5f6b7a"/></marker></defs>
+<rect x="1" y="1" width="798" height="230" rx="14" fill="#ffffff" stroke="#e1e5ea"/>
+<rect x="24" y="56" width="210" height="96" rx="8" fill="#e8f0fe" stroke="#3b6fd8" stroke-width="1.5"/>
+<text class="label" x="38" y="82" text-anchor="start" style="fill:#1f2933">…loaded with different</text>
+<text class="label" x="38" y="101" text-anchor="start" style="fill:#1f2933">organic fluorophores</text>
+<text class="label" x="38" y="120" text-anchor="start" style="fill:#1f2933">in the nanosecond</text>
+<text class="label" x="38" y="139" text-anchor="start" style="fill:#1f2933">range</text>
+<rect x="80" y="125" width="26" height="19" rx="4" fill="#ffd9a8"/>
+<text class="mono" x="93" y="139" text-anchor="middle" xml:space="preserve">[1]</text>
+<path d="M236,104 L300,104" fill="none" stroke="#5f6b7a" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text class="label" x="268" y="94" text-anchor="middle">finds [1]</text>
+<rect x="302" y="56" width="250" height="96" rx="8" fill="#e6f6ec" stroke="#2f9e62" stroke-width="1.5"/>
+<text class="mono" x="316" y="82" text-anchor="start" xml:space="preserve">hits[0].payload</text>
+<text class="mono" x="316" y="106" text-anchor="start" xml:space="preserve">source: Kage_2018_…pdf</text>
+<text class="mono" x="316" y="126" text-anchor="start" xml:space="preserve">page:   2</text>
+<path d="M554,104 L618,104" fill="none" stroke="#5f6b7a" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text class="label" x="586" y="94" text-anchor="middle">cl.Pdf</text>
+<path d="M620,30 h130 l24,24 v130 h-154 z" fill="#ffffff" stroke="#c5ccd3" stroke-width="1.5"/>
+<path d="M750,30 v24 h24" fill="none" stroke="#c5ccd3" stroke-width="1.5"/>
+<line x1="634" y1="74" x2="748" y2="74" stroke="#c5ccd3" stroke-width="3" stroke-linecap="round"/>
+<line x1="634" y1="86" x2="748" y2="86" stroke="#c5ccd3" stroke-width="3" stroke-linecap="round"/>
+<line x1="634" y1="98" x2="748" y2="98" stroke="#c5ccd3" stroke-width="3" stroke-linecap="round"/>
+<line x1="634" y1="110" x2="748" y2="110" stroke="#c5ccd3" stroke-width="3" stroke-linecap="round"/>
+<line x1="634" y1="122" x2="748" y2="122" stroke="#c5ccd3" stroke-width="3" stroke-linecap="round"/>
+<line x1="634" y1="134" x2="748" y2="134" stroke="#c5ccd3" stroke-width="3" stroke-linecap="round"/>
+<text class="label" x="697" y="168" text-anchor="middle">opens at page 2</text>
+<text class="label" x="24" y="210" text-anchor="start">The number in the answer points into the list of chunks, and every chunk remembers its file and page.</text>
+</svg>

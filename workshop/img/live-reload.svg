@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 926 164" width="926" role="img" aria-label="A notebook cell writes app.py, the Chainlit server notices the change and reloads the chat in the browser.">
+<title>A notebook cell writes app.py, the Chainlit server notices the change and reloads the chat in the browser.</title>
+<style>
+text { font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #1f2933; }
+.title { font-size: 14px; font-weight: 600; }
+.sub { font-size: 12px; fill: #5f6b7a; }
+.lane { font-size: 11px; font-weight: 700; letter-spacing: .08em; fill: #5f6b7a; }
+.label { font-size: 12px; fill: #5f6b7a; }
+.mono { font-family: Menlo, Consolas, "DejaVu Sans Mono", monospace; font-size: 12px; }
+</style>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<path d="M0,0 L10,5 L0,10 z" fill="#5f6b7a"/></marker></defs>
+<rect x="1" y="1" width="924" height="162" rx="14" fill="#ffffff" stroke="#e1e5ea"/>
+<rect x="24" y="40" width="200" height="64" rx="10" fill="#fff1e0" stroke="#d9822b" stroke-width="1.5"/>
+<text class="title" x="124.0" y="68.0" text-anchor="middle">Notebook cell</text>
+<text class="sub" x="124.0" y="86.0" text-anchor="middle">%%writefile app.py</text>
+<rect x="290" y="40" width="150" height="64" rx="10" fill="#e8f0fe" stroke="#3b6fd8" stroke-width="1.5"/>
+<text class="title" x="365.0" y="68.0" text-anchor="middle">app.py</text>
+<text class="sub" x="365.0" y="86.0" text-anchor="middle">the bot's code</text>
+<rect x="506" y="40" width="180" height="64" rx="10" fill="#f1ebff" stroke="#7c5cd6" stroke-width="1.5"/>
+<text class="title" x="596.0" y="68.0" text-anchor="middle">Chainlit server</text>
+<text class="sub" x="596.0" y="86.0" text-anchor="middle">watches app.py</text>
+<rect x="752" y="40" width="150" height="64" rx="10" fill="#ffffff" stroke="#c5ccd3" stroke-width="1.5"/>
+<text class="title" x="827.0" y="68.0" text-anchor="middle">Browser</text>
+<text class="sub" x="827.0" y="86.0" text-anchor="middle">localhost:8000</text>
+<path d="M226,72 L288,72" fill="none" stroke="#5f6b7a" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text class="label" x="257.0" y="64.0" text-anchor="middle">writes</text>
+<path d="M442,72 L504,72" fill="none" stroke="#5f6b7a" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text class="label" x="473.0" y="64.0" text-anchor="middle">notices</text>
+<path d="M688,72 L750,72" fill="none" stroke="#5f6b7a" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text class="label" x="719.0" y="64.0" text-anchor="middle">reloads</text>
+<text class="label" x="463" y="140" text-anchor="middle">Run the cell, switch to the browser tab: the bot has a new skill.</text>
+</svg>

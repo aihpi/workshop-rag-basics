@@ -16,7 +16,15 @@ uv sync
 cp .env.example .env
 ```
 
-Open `.env` and put in the key you got from the workshop host. That's all.
+Open `.env` and put in the key you got from the workshop host. Then check everything works:
+
+```bash
+uv run python check_setup.py
+```
+
+This also downloads the models [Docling](https://github.com/docling-project/docling) uses
+to read PDFs. Altogether you need about 2 GB of disk space, so please do this at home rather
+than over the workshop Wi-Fi.
 
 ## On the day
 

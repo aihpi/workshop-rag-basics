@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 344" width="820" role="img" aria-label="Docling recognises the parts of a PDF page (heading, paragraph, table, figure) and turns them into Markdown, keeping the heading as ## and the table as a Markdown table.">
+<title>Docling recognises the parts of a PDF page (heading, paragraph, table, figure) and turns them into Markdown, keeping the heading as ## and the table as a Markdown table.</title>
+<style>
+text { font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #1f2933; }
+.title { font-size: 14px; font-weight: 600; }
+.sub { font-size: 12px; fill: #5f6b7a; }
+.lane { font-size: 11px; font-weight: 700; letter-spacing: .08em; fill: #5f6b7a; }
+.label { font-size: 12px; fill: #5f6b7a; }
+.mono { font-family: Menlo, Consolas, "DejaVu Sans Mono", monospace; font-size: 12px; }
+</style>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<path d="M0,0 L10,5 L0,10 z" fill="#5f6b7a"/></marker></defs>
+<rect x="1" y="1" width="818" height="342" rx="14" fill="#ffffff" stroke="#e1e5ea"/>
+<text class="lane" x="40" y="30" text-anchor="start">PDF PAGE</text>
+<text class="lane" x="470" y="30" text-anchor="start">MARKDOWN FROM DOCLING</text>
+<rect x="40" y="42" width="220" height="282" rx="4" fill="#ffffff" stroke="#c5ccd3" stroke-width="1.5"/>
+<rect x="54" y="56" width="192" height="20" rx="3" fill="#e8f0fe" stroke="#3b6fd8" stroke-width="1.5" stroke-dasharray="4 3"/>
+<text class="label" x="240" y="70" text-anchor="end">heading</text>
+<rect x="54" y="84" width="192" height="52" rx="3" fill="#ffffff" stroke="#c5ccd3" stroke-width="1.5" stroke-dasharray="4 3"/>
+<text class="label" x="240" y="98" text-anchor="end">paragraph</text>
+<rect x="54" y="144" width="192" height="92" rx="3" fill="#e6f6ec" stroke="#2f9e62" stroke-width="1.5" stroke-dasharray="4 3"/>
+<text class="label" x="240" y="158" text-anchor="end">table</text>
+<rect x="54" y="244" width="192" height="66" rx="3" fill="#f1ebff" stroke="#7c5cd6" stroke-width="1.5" stroke-dasharray="4 3"/>
+<text class="label" x="240" y="258" text-anchor="end">figure</text>
+<line x1="62" y1="108" x2="196" y2="108" stroke="#c5ccd3" stroke-width="3" stroke-linecap="round"/>
+<line x1="62" y1="118" x2="196" y2="118" stroke="#c5ccd3" stroke-width="3" stroke-linecap="round"/>
+<line x1="62" y1="128" x2="196" y2="128" stroke="#c5ccd3" stroke-width="3" stroke-linecap="round"/>
+<line x1="62" y1="170" x2="238" y2="170" stroke="#2f9e62" stroke-width="1"/>
+<line x1="62" y1="190" x2="238" y2="190" stroke="#2f9e62" stroke-width="1"/>
+<line x1="62" y1="210" x2="238" y2="210" stroke="#2f9e62" stroke-width="1"/>
+<line x1="120" y1="160" x2="120" y2="228" stroke="#2f9e62" stroke-width="1"/>
+<line x1="180" y1="160" x2="180" y2="228" stroke="#2f9e62" stroke-width="1"/>
+<path d="M272,183 L452,183" fill="none" stroke="#5f6b7a" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text class="label" x="362" y="165" text-anchor="middle">finds headings, tables,</text>
+<text class="label" x="362" y="205" text-anchor="middle">figures, reading order</text>
+<rect x="470" y="53" width="4" height="18" fill="#3b6fd8"/>
+<text class="mono" x="484" y="66" text-anchor="start" xml:space="preserve">## Results and discussion</text>
+<rect x="470" y="87" width="4" height="18" fill="#c5ccd3"/>
+<text class="mono" x="484" y="100" text-anchor="start" xml:space="preserve">Our experimental approach presented</text>
+<rect x="470" y="105" width="4" height="18" fill="#c5ccd3"/>
+<text class="mono" x="484" y="118" text-anchor="start" xml:space="preserve">in Fig. 1 required dye/size-encoded …</text>
+<rect x="470" y="147" width="4" height="18" fill="#2f9e62"/>
+<text class="mono" x="484" y="160" text-anchor="start" xml:space="preserve">| Aptamer    | Target   | Buffer  |</text>
+<rect x="470" y="165" width="4" height="18" fill="#2f9e62"/>
+<text class="mono" x="484" y="178" text-anchor="start" xml:space="preserve">|------------|----------|---------|</text>
+<rect x="470" y="183" width="4" height="18" fill="#2f9e62"/>
+<text class="mono" x="484" y="196" text-anchor="start" xml:space="preserve">| T1-apta 17 | Thrombin | 20 mM … |</text>
+<rect x="470" y="201" width="4" height="18" fill="#2f9e62"/>
+<text class="mono" x="484" y="214" text-anchor="start" xml:space="preserve">| T2-apta 18 | Thrombin | 50 mM … |</text>
+<rect x="470" y="253" width="4" height="18" fill="#7c5cd6"/>
+<text class="mono" x="484" y="266" text-anchor="start" xml:space="preserve">Figure 1. Principle of the multiplexed …</text>
+<rect x="470" y="271" width="4" height="18" fill="#7c5cd6"/>
+<text class="mono" x="484" y="284" text-anchor="start" xml:space="preserve">&lt;!-- image --&gt;</text>
+</svg>

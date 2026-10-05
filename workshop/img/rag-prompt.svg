@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 340" width="920" role="img" aria-label="The prompt sent to the LLM: a system message with the rules, then a user message with the 5 retrieved chunks numbered [1] to [5] and the question. The LLM answers from those chunks and cites [1].">
+<title>The prompt sent to the LLM: a system message with the rules, then a user message with the 5 retrieved chunks numbered [1] to [5] and the question. The LLM answers from those chunks and cites [1].</title>
+<style>
+text { font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #1f2933; }
+.title { font-size: 14px; font-weight: 600; }
+.sub { font-size: 12px; fill: #5f6b7a; }
+.lane { font-size: 11px; font-weight: 700; letter-spacing: .08em; fill: #5f6b7a; }
+.label { font-size: 12px; fill: #5f6b7a; }
+.mono { font-family: Menlo, Consolas, "DejaVu Sans Mono", monospace; font-size: 12px; }
+</style>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<path d="M0,0 L10,5 L0,10 z" fill="#5f6b7a"/></marker></defs>
+<rect x="1" y="1" width="918" height="338" rx="14" fill="#ffffff" stroke="#e1e5ea"/>
+<text class="lane" x="24" y="34" text-anchor="start">WHAT THE LLM RECEIVES</text>
+<rect x="24" y="46" width="500" height="64" rx="8" fill="#fff1e0" stroke="#d9822b" stroke-width="1.5"/>
+<text class="lane" x="38" y="68" text-anchor="start">system</text>
+<text class="label" x="38" y="90" text-anchor="start" style="fill:#1f2933">Answer only from the context. If it isn't there, say you don't know.</text>
+<rect x="24" y="122" width="500" height="178" rx="8" fill="#ffffff" stroke="#c5ccd3" stroke-width="1.5"/>
+<text class="lane" x="38" y="144" text-anchor="start">user</text>
+<text class="mono" x="38" y="166" text-anchor="start" xml:space="preserve">Context:</text>
+<rect x="38" y="173" width="472" height="20" rx="4" fill="#e6f6ec"/>
+<text class="mono" x="46" y="188" text-anchor="start" xml:space="preserve">[1] …microbeads are loaded with different organic…</text>
+<rect x="38" y="197" width="472" height="20" rx="4" fill="#e6f6ec"/>
+<text class="mono" x="46" y="212" text-anchor="start" xml:space="preserve">[2] …tailor-made melamine beads with a polyelectr…</text>
+<rect x="38" y="241" width="472" height="20" rx="4" fill="#e6f6ec"/>
+<text class="mono" x="46" y="256" text-anchor="start" xml:space="preserve">[5] …imitations of lifetime encoding in flow with…</text>
+<text class="mono" x="46" y="236" text-anchor="start" xml:space="preserve">⋮</text>
+<rect x="38" y="272" width="3" height="20" fill="#3b6fd8"/>
+<text class="mono" x="46" y="287" text-anchor="start" xml:space="preserve">Question: what were the beads loaded with?</text>
+<path d="M526,173 L582,173" fill="none" stroke="#5f6b7a" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="584" y="143" width="100" height="60" rx="10" fill="#f1ebff" stroke="#7c5cd6" stroke-width="1.5"/>
+<text class="title" x="634.0" y="169.0" text-anchor="middle">LLM</text>
+<text class="sub" x="634.0" y="187.0" text-anchor="middle">gemma-4-31b</text>
+<path d="M686,173 L726,173" fill="none" stroke="#5f6b7a" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="728" y="110" width="168" height="126" rx="8" fill="#e8f0fe" stroke="#3b6fd8" stroke-width="1.5"/>
+<text class="label" x="740" y="136" text-anchor="start" style="fill:#1f2933">The beads were loaded</text>
+<text class="label" x="740" y="156" text-anchor="start" style="fill:#1f2933">with different organic</text>
+<text class="label" x="740" y="176" text-anchor="start" style="fill:#1f2933">fluorophores with</text>
+<text class="label" x="740" y="196" text-anchor="start" style="fill:#1f2933">lifetimes in the</text>
+<text class="label" x="740" y="216" text-anchor="start" style="fill:#1f2933">nanosecond range [1].</text>
+<text class="label" x="274" y="322" text-anchor="middle">green: the 5 chunks Qdrant found · blue: what you typed</text>
+</svg>
