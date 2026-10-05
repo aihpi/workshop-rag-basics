@@ -1,7 +1,7 @@
-"""Run once before the workshop: uv run python check_setup.py
+"""Run once you have the key: uv run python check_setup.py
 
-Checks your gateway key and downloads Docling's models, so nothing big has to
-download over the workshop Wi-Fi.
+Checks your gateway key and the two models, and downloads Docling's models
+(about 500 MB) so notebook 2 doesn't have to wait for them.
 """
 import os
 

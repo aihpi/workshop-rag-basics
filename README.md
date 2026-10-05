@@ -1,3 +1,5 @@
+**Here for the workshop? Start in [`workshop/`](workshop/README.md).** The rest of this repository is the full RAG template the workshop is built from.
+
 <p align="center">
   <img src="00_aisc/img/logo_aisc_bmftr.jpg" alt="AISC / BMFTR">
 </p>
