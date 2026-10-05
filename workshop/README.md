@@ -49,7 +49,7 @@ infrastructure in Potsdam. Use test or public documents only.
 | 0:30 | `02_documents.ipynb` | Reading PDFs with Docling; chunks |
 | 0:43 | `03_search.ipynb` | Embeddings, Qdrant, a search engine |
 | 0:56 | `04_rag.ipynb` | Answers with citations; which claims are backed |
-| 1:12 | `05_together.ipynb` | Your own PDF; what would break on your collection; next steps |
+| 1:12 | `05_together.ipynb` | Your own PDF; what would go wrong with your documents; next steps |
 | 1:30 | End | |
 
 The slides are in [`slides/`](slides/): [`rag-workshop.pdf`](slides/rag-workshop.pdf) to present,

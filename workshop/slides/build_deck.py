@@ -206,7 +206,7 @@ def notebook(number, title, minutes, learn, turn, exchange):
     return slide
 
 
-# ============================================================================ main path, slides 1 to 24
+# ============================================================================ main path, slides 1 to 25
 # Sessions: S0 welcome and setup · S1 chat · S2 documents · S3 search · S4 RAG and faithfulness · S5 your PDF.
 
 def vote(title, intro, questions, reveal=None):
@@ -391,7 +391,7 @@ for start, minutes, colour, label in AGENDA:
 text(s, 1.16, 8.85, 17.7, 0.5, "Every notebook block: a minute of slides, then the notebook, then a quick check.",
      size=17, color=GREY)
 notes(s, "Read the three lines aloud. Ask: is this what you came for? Write anything that doesn't fit on the whiteboard; "
-         "we come back to it at the end (slide 22).")
+         "we come back to it at the end (slide 23).")
 
 # ---------------------------------------------------------------------------- 9 architecture
 s = content("Architecture", BLUE, "BASICS")
@@ -547,7 +547,9 @@ for i, line_ in enumerate(["An embedding model turns text into a list of numbers
                            "Search returns the closest chunks, however far away they are.",
                            "Qdrant stores one point per chunk: the vector, and a payload with text, file and page."]):
     text(s, 1.16, 6.85 + i * 1.0, 17.7, 0.9, [[(f"{i + 1}   ", {"bold": True, "color": BLUE}), (line_, {})]], size=20)
-notes(s, "The cat and kitten numbers are the ones they just saw. Ask: do we know what we've built so far?")
+notes(s, "The cat and kitten numbers are the ones they just saw. Then ask the room: which part of the system "
+         "knows the page number of a chunk? The payload in Qdrant, written at ingestion from Docling's page numbers; "
+         "not the LLM, not the embedding model. Ask: do we know what we've built so far?")
 
 # ---------------------------------------------------------------------------- 19 notebook 4
 s = content("Retrieval-augmented generation", YELLOW, "HANDS-ON")
@@ -568,8 +570,8 @@ chat(s, 10.5, 5.7, 9.0, 1.1 + 0.62 + 0.25 + 1.9 + 0.25,
 notes(s, "S4. Same question as notebook 1. Let them click a source. Strict-or-not is a bonus today; it comes back in the "
          "transfer round.")
 
-# ---------------------------------------------------------------------------- 20 which half
-s = content("Which half?", YELLOW, "CHECKPOINT", logo=False, background=GREY)
+# ---------------------------------------------------------------------------- 20 the reveal
+s = content("Would you still rely on it?", YELLOW, "CHECKPOINT", logo=False, background=GREY)
 rect(s, 1.16, 2.3, 10.4, 5.3, WHITE)
 text(s, 1.5, 2.5, 9.8, 0.4, "THE NOTEBOOK 1 ANSWER, JUDGED IN NOTEBOOK 4 (ONE RUN)", size=14, bold=True, color=MUTED, spacing=2)
 JUDGED = [(True, "The beads were loaded with quantum dots (QDs)."),
@@ -582,25 +584,22 @@ text(s, 1.5, 3.05, 9.8, 5.6, [[("✓  " if ok else "✗  ", {"bold": True, "colo
                               for ok, claim in JUDGED], size=18, line=1.45)
 text(s, 1.5, 6.75, 9.8, 0.7, [[("faithfulness  ", {"color": GREY}), ("0.17", {"bold": True, "size": 26})]], size=20,
      font="Courier New")
-rect(s, 1.16, 7.95, 10.4, 1.25, YELLOW)
-text(s, 1.5, 7.95, 9.8, 1.25, [[("With RAG you don't read the paper either: ", {"bold": True}),
-                                ("click [1], and page 3 opens.", {})]], size=20, anchor=MSO_ANCHOR.MIDDLE)
-rect(s, 12.3, 2.3, 7.2, 2.9, WHITE)
-text(s, 12.6, 2.5, 6.7, 0.4, "WHAT THE PAPER SAYS · TABLE 1, PAGE 3", size=14, bold=True, color=MUTED, spacing=2)
-text(s, 12.6, 3.1, 6.7, 2.0, [[("Organic dyes in PMMA beads: ", {}), ("1.7 to 7.9 ns", {"bold": True})],
-                              [("Quantum dots in melamine beads: ", {}), ("22.6 ns", {"bold": True})]], size=19, line=1.5)
-text(s, 12.3, 5.65, 7.2, 1.3, "Which part of the system knows the page number of a chunk?", size=24, bold=True,
-     color=WHITE, line=1.1)
-text(s, 12.3, 7.15, 7.2, 2.4, [[(f"{l}   {o}", {"space_after": 10})] for l, o in
-                               [("A", "the LLM"), ("B", "the payload in Qdrant"), ("C", "the embedding model")]], size=21, color=WHITE)
+rect(s, 12.0, 2.3, 7.5, 5.3, WHITE)
+text(s, 12.35, 2.5, 7.0, 0.4, "WHAT THE PAPER SAYS · TABLE 1, PAGE 3", size=14, bold=True, color=MUTED, spacing=2)
+text(s, 12.35, 3.2, 6.9, 4.2, [[("Organic dyes in PMMA beads", {})], [("1.7 to 7.9 ns", {"bold": True, "size": 30})],
+                               [(" ", {"size": 10})],
+                               [("Quantum dots in melamine beads", {})], [("22.6 ns", {"bold": True, "size": 30})]],
+     size=20, line=1.2)
+rect(s, 1.16, 8.0, 18.34, 1.25, YELLOW)
+text(s, 1.5, 8.0, 17.8, 1.25, [[("With RAG you don't read the paper either: ", {"bold": True}),
+                                ("click [1], and page 3 opens.", {})]], size=22, anchor=MSO_ANCHOR.MIDDLE)
 notes(s, "Go back to the vote on the whiteboard. The ✗ lines are what nobody could see; one claim (quantum dots) "
          "was right, and the paper box shows the real values. You only know once you check the source, and RAG makes "
          "that one click. Their own run will show different claims and a different score.\n\n"
          "If most said A: five of six claims were invented, and you would have used them.\n"
          "If most said B: point at the quick checks on the whiteboard. This click is the quick check.\n"
          "If most said C: right instinct, and now there is a way to check.\n\n"
-         "Then the page-number question on the right. Answer B, the payload in Qdrant: written at ingestion from "
-         "Docling's page numbers (notebook 3, slide 18). Ask: do we see how far we've come?")
+         "Ask: do we see how far we've come?")
 
 # ---------------------------------------------------------------------------- 21 notebook 5
 s = content("Putting it together", YELLOW, "HANDS-ON")
@@ -623,22 +622,27 @@ text(s, 1.16, 9.25, 17.7, 0.5, [[("Your PDF goes to the AISC gateway in Potsdam.
 notes(s, "S5. The score is already in the app. Expect at least one answer that is worse than on the papers; that's the "
          "point. A scanned PDF has no text layer, and with OCR off the bot gets nothing to answer from.")
 
-# ---------------------------------------------------------------------------- 22 transfer
-s = content("Your collection", YELLOW, "TRANSFER")
-for i, question in enumerate(["Which collection would you point this at?", "What do you expect to break first, and why?"]):
-    rect(s, 1.16 + i * 9.0, 2.4, 8.6, 3.6, SAND)
-    text(s, 1.6 + i * 9.0, 2.75, 7.8, 0.5, f"QUESTION {i + 1}", size=15, bold=True, color=MUTED, spacing=3)
-    text(s, 1.6 + i * 9.0, 3.35, 7.8, 2.4, question, size=32, bold=True, line=1.1)
-text(s, 1.16, 6.65, 17.7, 0.6, "One sentence each.", size=22, color=GREY)
-rect(s, 1.16, 8.1, 17.7, 1.3, WHITE, line="D0D3D6")
-text(s, 1.5, 8.1, 3, 1.3, "OFTEN", size=15, bold=True, color=MUTED, spacing=3, anchor=MSO_ANCHOR.MIDDLE)
-text(s, 3.4, 8.1, 15.2, 1.3, "Scanned PDFs  ·  tables  ·  questions across several documents", size=24, anchor=MSO_ANCHOR.MIDDLE)
-notes(s, "One sentence each; above 12 people, tables of four, one sentence per table. Show the OFTEN line only after "
-         "the round. Close the loop with the whiteboard list from slide 8. Ask: can you repeat it on your own? "
-         "If someone asks why not put all PDFs in the prompt: cost per question, page citations, and collections "
-         "larger than any context window.")
+# ---------------------------------------------------------------------------- 22–23 transfer: question, then what often goes wrong
+for reveal in (False, True):
+    s = content("Your own documents", YELLOW, "TRANSFER")
+    for i, question in enumerate(["Which documents would you use this for?", "What do you expect to go wrong first, and why?"]):
+        rect(s, 1.16 + i * 9.0, 2.4, 8.6, 3.6, SAND)
+        text(s, 1.6 + i * 9.0, 2.75, 7.8, 0.5, f"QUESTION {i + 1}", size=15, bold=True, color=MUTED, spacing=3)
+        text(s, 1.6 + i * 9.0, 3.35, 7.8, 2.4, question, size=32, bold=True, line=1.1)
+    text(s, 1.16, 6.65, 17.7, 0.6, "One sentence each, round the room.", size=24, color=GREY)
+    if reveal:
+        rect(s, 1.16, 8.1, 17.7, 1.3, WHITE, line="D0D3D6")
+        text(s, 1.5, 8.1, 3.4, 1.3, "WHAT OFTEN GOES WRONG", size=14, bold=True, color=MUTED, spacing=2, anchor=MSO_ANCHOR.MIDDLE)
+        text(s, 5.2, 8.1, 13.4, 1.3, "Scanned PDFs  ·  tables  ·  questions across several documents", size=24,
+             anchor=MSO_ANCHOR.MIDDLE)
+        notes(s, "After the round: compare with what people said. Close the loop with the whiteboard list from slide 8. "
+                 "Ask: can you repeat it on your own?")
+    else:
+        notes(s, "One sentence each, for example 'my 200 papers on X; I expect the tables to break, because ...'. Above 12 "
+                 "people, tables of four, one sentence per table. Then the next slide. If someone asks why not put all "
+                 "PDFs in the prompt: cost per question, page citations, and collections larger than any context window.")
 
-# ---------------------------------------------------------------------------- 23 where to take this
+# ---------------------------------------------------------------------------- 24 where to take this
 s = content("Where to take this", BLUE, "NEXT STEPS")
 rows = [("Today", "The template"),
         ("Fixed 1000-character chunks", "Structure-aware chunkers, chosen per data source"),
@@ -663,7 +667,7 @@ for i, (code, label, link) in enumerate([(qr("https://github.com/aihpi/pilotproj
 notes(s, "The template is where a real project starts. Office hours if you get stuck on your collection: the same offers as on slide 7. SENTRA and "
          "GrundschutzKI (appendix) are two pilot projects built this way.")
 
-# ---------------------------------------------------------------------------- 24 feedback
+# ---------------------------------------------------------------------------- 25 feedback
 s = prs.slides.add_slide(BLANK)
 text(s, 1.67, 1.85, 13.5, 1.2, "YOUR FEEDBACK COUNTS", size=60, bold=True, color=GREY)
 text(s, 1.67, 3.1, 9.5, 1.2, "We shape our next workshops around your answers. Two minutes is enough.", size=24, line=1.25)
