@@ -46,12 +46,17 @@ infrastructure in Potsdam. Use test or public documents only.
 | Time | Session | |
 |---|---|---|
 | 0:00 | Welcome, the AI Service Centre, setup | The install runs while we talk |
-| 0:17 | `01_chat.ipynb` | Talking to an LLM: the confident answer |
-| 0:30 | `02_documents.ipynb` | Reading PDFs with Docling; chunks |
-| 0:43 | `03_search.ipynb` | Embeddings, Qdrant, a search engine |
-| 0:56 | `04_rag.ipynb` | Answers with citations; which claims are backed |
-| 1:12 | `05_together.ipynb` | Your own PDF; what would go wrong with your documents; next steps |
-| 1:30 | End | |
+| 0:22 | `01_chat.ipynb` | Talking to an LLM: the confident answer |
+| 0:35 | `02_documents.ipynb` | Reading PDFs with Docling; chunks |
+| 0:48 | `03_search.ipynb` | Embeddings, Qdrant, a search engine |
+| 1:01 | Break | |
+| 1:06 | `04_rag.ipynb` | Answers with citations; which claims are backed |
+| 1:22 | `05_together.ipynb` | Your own PDF; what would go wrong with your documents |
+| 1:40 | Questions, feedback | |
+| 1:45 | End | |
+
+Every notebook has a fixed time. Exercises marked **Bonus** are only for when you finish early;
+when the time is up, we move on together.
 
 The slides are in [`slides/`](slides/): [`rag-workshop.pdf`](slides/rag-workshop.pdf) to present,
 [`rag-workshop.pptx`](slides/rag-workshop.pptx) with speaker notes. Everything after the

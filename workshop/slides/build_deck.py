@@ -203,7 +203,7 @@ def notebook(number, title, minutes, learn, turn, exchange):
     kicker(slide, 1.16, 1.85, 9, f"Notebook {number} · {minutes} min", ORANGE)
     kicker(slide, 1.16, 2.65, 9, "In this notebook")
     text(slide, 1.16, 3.15, 9.4, 2.4, [[(f"•  {item}", {"space_after": 8})] for item in learn], size=19)
-    kicker(slide, 1.16, 5.55, 9, "Your turn · in the chatbot")
+    kicker(slide, 1.16, 5.55, 9, "Your turn · in the chatbot · + only if time")
     numbered(slide, 1.16, 6.05, 9.4, turn, gap=0.75)
     text(slide, 1.16, 6.05 + 0.75 * len(turn) + 0.15, 9.4, 0.4, "Solutions are folded away under each exercise.",
          size=15, color=MUTED)
@@ -250,7 +250,7 @@ image(s, "logo-kisz.png", 16.45, 0.74, w=2.8)
 image(s, "logo-bmftr.png", 16.41, 1.98, w=2.8)
 image(s, "hpi-tagline.png", 0.76, 10.23, w=2.92)
 image(s, "hpi-building.png", 9.72, 6.72, w=11.72)
-notes(s, "S0, 17 minutes with the AI Service Centre and the install. 90 minutes, mostly in the notebooks. The participant list is going round.")
+notes(s, "S0, 22 minutes with the AI Service Centre and the install, 5 of them buffer for setup problems. 1:45 in total, mostly in the notebooks, with a 5-minute break after notebook 3 and 5 minutes for questions at the end. The participant list is going round.")
 
 # ---------------------------------------------------------------------------- 2 participant list, start the install
 s = content("Participant list", MUTED, None)
@@ -375,7 +375,7 @@ notes(s, "Concrete call to action: book office hours (QR on the left), apply for
          "which opens every three months (QR on the right).")
 
 # ---------------------------------------------------------------------------- 8 destination and agenda
-s = content("By 1:30 you have", MUTED, None)
+s = content("By 1:45 you have", MUTED, None)
 for i, line_ in enumerate(["A chatbot on your laptop that answers from your own PDF.",
                            "Every claim links to the page it came from, with a score that says how well it is backed.",
                            "A list of what to check before you trust it."]):
@@ -383,9 +383,10 @@ for i, line_ in enumerate(["A chatbot on your laptop that answers from your own 
     text(s, 1.16, 2.3 + i * 1.25, 0.55, 0.55, str(i + 1), size=20, bold=True, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
     text(s, 2.0, 2.3 + i * 1.25, 16.5, 0.9, line_, size=26, anchor=MSO_ANCHOR.MIDDLE)
 kicker(s, 1.16, 6.5, 9, "Agenda")
-AGENDA = [(0, 17, RED, "Welcome · AISC · setup"), (17, 13, YELLOW, "1 · Chat"), (30, 13, YELLOW, "2 · Documents"),
-          (43, 13, YELLOW, "3 · Search"), (56, 16, YELLOW, "4 · RAG + score"), (72, 18, YELLOW, "5 · Your PDF · transfer")]
-per_minute = 17.7 / 90
+AGENDA = [(0, 22, RED, "Welcome · AISC · setup"), (22, 13, YELLOW, "1 · Chat"), (35, 13, YELLOW, "2 · Documents"),
+          (48, 13, YELLOW, "3 · Search"), (61, 5, SAND, "Break"), (66, 16, YELLOW, "4 · RAG + score"),
+          (82, 18, YELLOW, "5 · Your PDF · transfer"), (100, 5, SAND, "Q&A")]
+per_minute = 17.7 / 105
 for start, minutes, colour, label in AGENDA:
     x, w = 1.16 + start * per_minute, minutes * per_minute - 0.05
     rect(s, x, 7.55, w, 1.0, colour)
@@ -393,10 +394,10 @@ for start, minutes, colour, label in AGENDA:
         text(s, x + 0.12, 7.55, w - 0.2, 1.0, label, size=15, bold=True, color=WHITE if colour == RED else INK,
              anchor=MSO_ANCHOR.MIDDLE)
         text(s, x, 7.05, w, 0.4, f"{start // 60}:{start % 60:02d}", size=15, bold=True, color=GREY)
-text(s, 1.16, 8.85, 17.7, 0.5, "Every notebook block: a minute of slides, then the notebook, then a quick check.",
+text(s, 1.16, 8.85, 17.7, 0.5, "Every notebook block: a minute of slides, then the notebook (time-boxed), then a quick check.",
      size=17, color=GREY)
 notes(s, "Read the three lines aloud. Ask: is this what you came for? Write anything that doesn't fit on the whiteboard; "
-         "we come back to it at the end (slide 23).")
+         "we come back to it at the end (slide 24).")
 
 # ---------------------------------------------------------------------------- 9 architecture
 s = content("Architecture", BLUE, "BASICS")
@@ -470,7 +471,7 @@ s = notebook(1, "Talking to an LLM", 6,
              ["Personality: change the system prompt", "Bonus: show how long each answer took"],
              [("you", "In Kage et al. (2018), what were the lifetime-encoded beads loaded with, and which lifetimes did they have?", 1.3),
               ("step", "The model answers. Would you rely on it?", 0.45)])
-notes(s, "S1. Don't say whether the answer is right, and don't hint. They decide in five minutes.")
+notes(s, "S1. 6 minutes. Time box, then continue: nobody waits for the bonuses. Don't say whether the answer is right, and don't hint. They decide in five minutes.")
 
 # ---------------------------------------------------------------------------- 12 the vote
 s = vote("Would you rely on it?", "Hands up.\nRemember your letter.",
@@ -512,9 +513,9 @@ text(s, 1.16, 6.2, 8.5, 1.4, "A PDF stores where to draw each letter. Docling fi
 diagram("chunking", 10.6, 2.45, 8.6, s)
 text(s, 10.6, 6.2, 8.6, 1.4, "We cut chunks of 1000 characters; a new one starts every 800, so neighbours share 200.",
      size=19, line=1.25)
-kicker(s, 1.16, 8.05, 9, "Your turn · in the chatbot")
+kicker(s, 1.16, 8.05, 9, "Your turn · in the chatbot · + only if time")
 numbered(s, 1.16, 8.55, 17, ["Where are the cuts? Try 300 and 3000", "Bonus: only the tables"], gap=0.7)
-notes(s, "S2. Docling needs about a minute for the three papers; talk through the Markdown while it runs. "
+notes(s, "S2. 7 minutes. Time box, then continue: nobody waits for the bonuses. Before you move on: everyone sees the 'saved … chunks' line (chunks.json)? Docling needs about a minute for the three papers; talk through the Markdown while it runs. "
          "GrundschutzKI cuts at headings instead; that is in the appendix.")
 
 # ---------------------------------------------------------------------------- 15–16 notebook 2 checkpoint
@@ -543,7 +544,7 @@ s = notebook(3, "Search", 8,
                       "Kage_2018_SciReports.pdf, p. 3  (score 0.64)\n› Table 1. Lifetime codes and respective luminophores …", 2.55),
               ("you", "What is the capital of France?", 0.62),
               ("bot", "Kage_2018_SciReports.pdf, p. 6  (score 0.17) …", 0.75)])
-notes(s, "S3. Make them ask the France question before you explain anything.")
+notes(s, "S3. 8 minutes. Time box, then continue: nobody waits for the bonuses. Before you move on: everyone sees the 'saved … chunks' line (index.json)? Make them ask the France question before you explain anything.")
 
 # ---------------------------------------------------------------------------- 18 why France
 s = content("Why did France get a hit?", BLUE, "BASICS")
@@ -557,7 +558,11 @@ notes(s, "The cat and kitten numbers are the ones they just saw. Then ask the ro
          "knows the page number of a chunk? The payload in Qdrant, written at ingestion from Docling's page numbers; "
          "not the LLM, not the embedding model. Ask: do we know what we've built so far?")
 
-# ---------------------------------------------------------------------------- 19 notebook 4
+# ---------------------------------------------------------------------------- 19 break
+s = divider("", "Break", "5 minutes. Behind? Finish notebook 3 now: notebook 4 needs its index.json.", GREY)
+notes(s, "Five minutes, start a visible timer. Walk round: anyone without index.json runs notebook 3 to the end now.")
+
+# ---------------------------------------------------------------------------- 20 notebook 4
 s = content("Retrieval-augmented generation", YELLOW, "HANDS-ON")
 kicker(s, 1.16, 1.85, 9, "Notebook 4 · 11 min", ORANGE)
 for i, (word, rest) in enumerate([("Retrieve", "the 5 closest chunks"), ("Augment", "the prompt with them, numbered [1] to [5]"),
@@ -565,7 +570,7 @@ for i, (word, rest) in enumerate([("Retrieve", "the 5 closest chunks"), ("Augmen
     text(s, 1.16, 2.55 + i * 1.05, 8.6, 1.0, [[(word.upper(), {"bold": True, "color": BLUE, "spacing": 3, "size": 17})],
                                               [(rest, {"size": 20})]])
 text(s, 1.16, 5.75, 8.6, 1.0, "Every [n] leads to a chunk, and every chunk remembers its file and page.", size=20, line=1.25)
-kicker(s, 1.16, 7.15, 9, "Your turn")
+kicker(s, 1.16, 7.15, 9, "Your turn · + only if time")
 numbered(s, 1.16, 7.65, 8.8, ["How much context? 2 chunks instead of 5", "Bonus: strict or not",
                               "Bonus: show the evidence; follow-up questions"], gap=0.72)
 diagram("rag-prompt", 10.5, 2.0, 9.0, s)
@@ -573,8 +578,8 @@ chat(s, 10.5, 5.7, 9.0, 1.1 + 0.62 + 0.25 + 1.9 + 0.25,
      [("you", "What were the beads in Kage et al. loaded with?", 0.62),
       ("bot", "PMMA beads stained with organic dyes from PolyAn GmbH [1], and melamine beads loaded with "
               "CdSe/CdS/ZnS quantum dots [1], [2].\n\nSources:  Kage_2018_SciReports, p. 2", 1.9)])
-notes(s, "S4. Same question as notebook 1. Let them click a source. Strict-or-not is a bonus today; it comes back on the "
-         "checklist on slide 23.")
+notes(s, "S4. 11 minutes. Time box, then continue: nobody waits for the bonuses. Same question as notebook 1. Let them click a source. Strict-or-not is a bonus today; it comes back on the "
+         "checklist on slide 24.")
 
 # ---------------------------------------------------------------------------- 20 the reveal
 s = content("Would you still rely on it?", YELLOW, "CHECKPOINT", logo=False, background=GREY)
@@ -611,7 +616,7 @@ notes(s, "Go back to the vote on the whiteboard. The ✗ lines are what nobody c
 s = content("Putting it together", YELLOW, "HANDS-ON")
 kicker(s, 1.16, 1.85, 9, "Notebook 5 · 6 min", ORANGE)
 diagram("overview", 1.16, 2.45, 10.3, s)
-kicker(s, 12.3, 2.45, 7, "Your turn · in the chatbot")
+kicker(s, 12.3, 2.45, 7.2, "Your turn · in the chatbot · + only if time")
 numbered(s, 12.3, 2.95, 7.2, ["Your own document: attach a PDF, ask, check the page and the score",
                               "Bonus: chat with this document only"], gap=1.25)
 pieces = [("Read a PDF with Docling", "2"), ("Cut into chunks", "2"), ("Turn text into vectors", "3"),
@@ -625,7 +630,7 @@ for i, (piece, nb) in enumerate(pieces):
     text(s, x + 3.55, y, 0.5, 0.75, nb, size=20, bold=True, color=ORANGE, align=PP_ALIGN.RIGHT, anchor=MSO_ANCHOR.MIDDLE)
 text(s, 1.16, 9.25, 17.7, 0.5, [[("Your PDF goes to the AISC gateway in Potsdam. ", {"bold": True}),
                                  ("Test or public documents only.", {})]], size=18, color=RED)
-notes(s, "S5. The score is already in the app. Expect at least one answer that is worse than on the papers; that's the "
+notes(s, "S5. 6 minutes. Time box, then continue: nobody waits for the bonuses. The score is already in the app. Expect at least one answer that is worse than on the papers; that's the "
          "point. A scanned PDF has no text layer, and with OCR off the bot gets nothing to answer from.")
 
 # ---------------------------------------------------------------------------- 22–23 transfer: question, then what often goes wrong
@@ -700,7 +705,7 @@ image(s, "logo-kisz.png", 16.45, 0.74, w=2.8)
 image(s, "logo-bmftr.png", 16.41, 1.98, w=2.8)
 image(s, "hpi-tagline.png", 0.76, 10.23, w=2.92)
 image(s, "hpi-building.png", 9.72, 6.72, w=11.72)
-notes(s, "Leave the QR code up while questions come in. Contact: kisz@hpi.de.")
+notes(s, "1:40: five minutes for questions. Leave the QR code up while they come in. Contact: kisz@hpi.de.")
 
 
 # ============================================================================ appendix
