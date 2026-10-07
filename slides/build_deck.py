@@ -471,7 +471,7 @@ s = notebook(1, "Talking to an LLM", 6,
              ["Personality: change the system prompt", "Bonus: show how long each answer took"],
              [("you", "In Kage et al. (2018), what were the lifetime-encoded beads loaded with, and which lifetimes did they have?", 1.3),
               ("step", "The model answers. Would you rely on it?", 0.45)])
-notes(s, "S1. 6 minutes. Time box, then continue: nobody waits for the bonuses. Don't say whether the answer is right, and don't hint. They decide in five minutes.")
+notes(s, "S1. 6 minutes. Domain in one sentence, before they ask: Kage et al. is bioanalytics, flow cytometry; tiny beads are told apart by how long they glow after a flash of light. Nobody needs to understand the paper, they only judge an answer about it. Time box, then continue: nobody waits for the bonuses. Don't say whether the answer is right, and don't hint. They decide in five minutes.")
 
 # ---------------------------------------------------------------------------- 12 the vote
 s = vote("Would you rely on it?", "Hands up.\nRemember your letter.",
