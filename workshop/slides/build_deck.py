@@ -49,15 +49,19 @@ def text(slide, x, y, w, h, runs, size=18, color=INK, bold=False, align=PP_ALIGN
         p = frame.paragraphs[0] if i == 0 else frame.add_paragraph()
         p.alignment, p.line_spacing = align, line
         for run_text, opts in ([(para, {})] if isinstance(para, str) else para):
-            r = p.add_run()
-            r.text = run_text
-            f = r.font
-            f.name, f.size = opts.get("font", font), Pt(opts.get("size", size))
-            f.bold, f.color.rgb = opts.get("bold", bold), rgb(opts.get("color", color))
-            if opts.get("link"):
-                r.hyperlink.address = opts["link"]
-            if opts.get("spacing", spacing):
-                r._r.get_or_add_rPr().set("spc", str(int(opts.get("spacing", spacing) * 100)))
+            # A raw "\n" inside a run makes PowerPoint ask for a repair; a line break is <a:br/> between runs.
+            for j, piece in enumerate(run_text.split("\n")):
+                if j:
+                    p.add_line_break()
+                r = p.add_run()
+                r.text = piece
+                f = r.font
+                f.name, f.size = opts.get("font", font), Pt(opts.get("size", size))
+                f.bold, f.color.rgb = opts.get("bold", bold), rgb(opts.get("color", color))
+                if opts.get("link"):
+                    r.hyperlink.address = opts["link"]
+                if opts.get("spacing", spacing):
+                    r._r.get_or_add_rPr().set("spc", str(int(opts.get("spacing", spacing) * 100)))
         if isinstance(para, list) and para and para[0][1].get("space_after"):
             p.space_after = Pt(para[0][1]["space_after"])
     return box
@@ -76,9 +80,10 @@ def rect(slide, x, y, w, h, fill, line=None, shape=MSO_SHAPE.RECTANGLE):
 
 
 def poly(slide, points, fill):
-    builder = slide.shapes.build_freeform(Inches(points[0][0]), Inches(points[0][1]), scale=Inches(1))
-    builder.add_line_segments([(x - points[0][0], y - points[0][1]) for x, y in points[1:]])
-    s = builder.convert_to_shape(Inches(points[0][0]), Inches(points[0][1]))
+    # Points are in inches; scale turns them into EMU. Start point and origin are in those same inch units.
+    builder = slide.shapes.build_freeform(points[0][0], points[0][1], scale=Inches(1))
+    builder.add_line_segments(points[1:])
+    s = builder.convert_to_shape()
     s.fill.solid()
     s.fill.fore_color.rgb = rgb(fill)
     s.line.fill.background()
@@ -259,8 +264,8 @@ text(s, 1.16, 7.3, 9.4, 1.0, "The printout stays with the workshop lead. Please 
 rect(s, 11.4, 2.6, 8.1, 6.2, YELLOW)
 text(s, 11.8, 2.9, 7.4, 0.5, "START THE INSTALL NOW", size=17, bold=True, spacing=3)
 text(s, 11.8, 3.5, 7.4, 1.2, "It downloads about 2 GB, so let it run while we talk.", size=20, line=1.2)
-text(s, 11.8, 4.75, 7.4, 2.6, "git clone https://github.com/\n    aihpi/workshop-rag-basics.git\ncd workshop-rag-basics/workshop\nuv sync",
-     size=17, font="Courier New", line=1.3)
+text(s, 11.8, 4.75, 7.4, 2.6, "git clone https://github.com/aihpi/workshop-rag-basics.git\ncd workshop-rag-basics/workshop\nuv sync",
+     size=14, font="Courier New", line=1.3)
 image(s, qr("https://" + REPO, "qr-repo"), 11.8, 7.0, w=1.5)
 text(s, 13.5, 7.35, 5.8, 0.9, "Needs uv and Git, from the\nworkshop-getting-started guide.", size=15, line=1.2)
 notes(s, "Pass the list round now, not at the end. Get everyone to start git clone and uv sync now: it's about 2 GB "
@@ -436,7 +441,7 @@ notes(s, "Every box on this picture is one notebook. Ingestion happens once, inf
 # ---------------------------------------------------------------------------- 10 setup
 s = content("Setup", YELLOW, "HANDS-ON")
 steps = [("Install (started on slide 2)", "git clone https://github.com/aihpi/workshop-rag-basics.git\ncd workshop-rag-basics/workshop\nuv sync"),
-         ("Add the key", "cp .env.example .env    # then paste the key from the whiteboard"),
+         ("Add the key", "cp .env.example .env\nopen -e .env    # Windows: notepad .env\n# paste the key from the whiteboard after LLM_API_KEY="),
          ("Check, and fetch Docling's models", "uv run python check_setup.py"), ("Start", "uv run jupyter lab")]
 y = 2.15
 for i, (head, code) in enumerate(steps):
@@ -463,7 +468,7 @@ s = notebook(1, "Talking to an LLM", 6,
              ["Connect to the model through the gateway", "Ask about a detail from one of our papers",
               "Build a chatbot that remembers and streams"],
              ["Personality: change the system prompt", "Bonus: show how long each answer took"],
-             [("you", "In Kage et al. (2018), what were the lifetime-encoded beads loaded with?", 1.0),
+             [("you", "In Kage et al. (2018), what were the lifetime-encoded beads loaded with, and which lifetimes did they have?", 1.3),
               ("step", "The model answers. Would you rely on it?", 0.45)])
 notes(s, "S1. Don't say whether the answer is right, and don't hint. They decide in five minutes.")
 
@@ -485,8 +490,8 @@ s = content("Half right, and you can't\ntell which half", RED, "MOTIVATION")
 cols = [(ORANGE, "No access to\nyour documents",
          "Language models are trained mostly on public data. Your lab reports and paywalled papers are unknown to them."),
         (RED, "Similar instead\nof right",
-         "When the right information is missing, the model falls back on related material: the rules for no-parking "
-         "zones answer a question about no-stopping zones."),
+         "When the right information is missing, the model falls back on related material: values from similar papers "
+         "end up in the answer about yours."),
         (YELLOW, "RAG decides what\nthe answer is built on",
          "Retrieval-augmented generation sets which documents an answer may use, and cites the page.")]
 for i, (colour, head, body) in enumerate(cols):
@@ -496,7 +501,7 @@ for i, (colour, head, body) in enumerate(cols):
     text(s, x, 3.35, 5.5, 1.2, head, size=28, bold=True, line=1.05)
     text(s, x, 4.75, 5.3, 4.5, body, size=22, line=1.3)
 notes(s, "Whatever you voted: you had no way to know. It sounded right, and to check it you would have had to read the "
-         "paper. That is the problem. Notebook 4 tells us which half was right.")
+         "paper. That is the problem. Notebook 4 checks your own answer against the paper.")
 
 # ---------------------------------------------------------------------------- 14 notebook 2
 s = content("Reading documents", YELLOW, "HANDS-ON")
@@ -521,11 +526,12 @@ s = vote("What did you find?", "Vote by show of hands.\nAnswers on the next slid
 notes(s, "Read out, hands up.")
 s = vote("What we found", None, NB2, reveal=[
     ("C", "All 5 tables in the three papers came through with their rows and columns, searchable like any other text."),
-    ("B", "628 instead of 197 chunks, and 17 instead of 5 end in the middle of a table row. At 3000: 69 chunks, none.")])
+    ("B", "Over the three papers: 628 chunks instead of 197, so more borders fall inside a table. At 3000: 69 chunks.")])
 rect(s, 1.16, 9.0, 17.7, 1.1, WHITE)
 text(s, 1.5, 9.0, 3, 1.1, "NEXT", size=15, bold=True, color=MUTED, spacing=3, anchor=MSO_ANCHOR.MIDDLE)
 text(s, 3.4, 9.0, 15.2, 1.1, "We have good chunks. How do we find the right ones for a question?", size=20, anchor=MSO_ANCHOR.MIDDLE)
-notes(s, "Reveal. Anyone see something different? The chunk numbers are measured on the three papers.")
+notes(s, "Reveal. Anyone see something different? The chunk numbers are over all three papers (the chunk cell in notebook 2); "
+         "in the chatbot you counted one PDF, so your numbers are smaller.")
 
 # ---------------------------------------------------------------------------- 17 notebook 3
 s = notebook(3, "Search", 8,
@@ -560,15 +566,15 @@ for i, (word, rest) in enumerate([("Retrieve", "the 5 closest chunks"), ("Augmen
                                               [(rest, {"size": 20})]])
 text(s, 1.16, 5.75, 8.6, 1.0, "Every [n] leads to a chunk, and every chunk remembers its file and page.", size=20, line=1.25)
 kicker(s, 1.16, 7.15, 9, "Your turn")
-numbered(s, 1.16, 7.65, 8.8, ["How much context? Score limit 2 and limit 15", "Bonus: strict or not",
+numbered(s, 1.16, 7.65, 8.8, ["How much context? 2 chunks instead of 5", "Bonus: strict or not",
                               "Bonus: show the evidence; follow-up questions"], gap=0.72)
 diagram("rag-prompt", 10.5, 2.0, 9.0, s)
 chat(s, 10.5, 5.7, 9.0, 1.1 + 0.62 + 0.25 + 1.9 + 0.25,
      [("you", "What were the beads in Kage et al. loaded with?", 0.62),
       ("bot", "PMMA beads stained with organic dyes from PolyAn GmbH [1], and melamine beads loaded with "
               "CdSe/CdS/ZnS quantum dots [1], [2].\n\nSources:  Kage_2018_SciReports, p. 2", 1.9)])
-notes(s, "S4. Same question as notebook 1. Let them click a source. Strict-or-not is a bonus today; it comes back in the "
-         "transfer round.")
+notes(s, "S4. Same question as notebook 1. Let them click a source. Strict-or-not is a bonus today; it comes back on the "
+         "checklist on slide 23.")
 
 # ---------------------------------------------------------------------------- 20 the reveal
 s = content("Would you still rely on it?", YELLOW, "CHECKPOINT", logo=False, background=GREY)
@@ -595,11 +601,11 @@ text(s, 1.5, 8.0, 17.8, 1.25, [[("With RAG you don't read the paper either: ", {
                                 ("click [1], and page 3 opens.", {})]], size=22, anchor=MSO_ANCHOR.MIDDLE)
 notes(s, "Go back to the vote on the whiteboard. The ✗ lines are what nobody could see; one claim (quantum dots) "
          "was right, and the paper box shows the real values. You only know once you check the source, and RAG makes "
-         "that one click. Their own run will show different claims and a different score.\n\n"
+         "that one click. This is one run; everyone sees their own notebook 1 answer judged, with its own claims and score.\n\n"
          "If most said A: five of six claims were invented, and you would have used them.\n"
          "If most said B: point at the quick checks on the whiteboard. This click is the quick check.\n"
          "If most said C: right instinct, and now there is a way to check.\n\n"
-         "Ask: do we see how far we've come?")
+         "Ask: do we see how far we've come? Then: that held on our papers; does it hold on yours?")
 
 # ---------------------------------------------------------------------------- 21 notebook 5
 s = content("Putting it together", YELLOW, "HANDS-ON")
@@ -629,15 +635,25 @@ for reveal in (False, True):
         rect(s, 1.16 + i * 9.0, 2.4, 8.6, 3.6, SAND)
         text(s, 1.6 + i * 9.0, 2.75, 7.8, 0.5, f"QUESTION {i + 1}", size=15, bold=True, color=MUTED, spacing=3)
         text(s, 1.6 + i * 9.0, 3.35, 7.8, 2.4, question, size=32, bold=True, line=1.1)
-    text(s, 1.16, 6.65, 17.7, 0.6, "One sentence each, round the room.", size=24, color=GREY)
     if reveal:
-        rect(s, 1.16, 8.1, 17.7, 1.3, WHITE, line="D0D3D6")
-        text(s, 1.5, 8.1, 3.4, 1.3, "WHAT OFTEN GOES WRONG", size=14, bold=True, color=MUTED, spacing=2, anchor=MSO_ANCHOR.MIDDLE)
-        text(s, 5.2, 8.1, 13.4, 1.3, "Scanned PDFs  ·  tables  ·  questions across several documents", size=24,
+        rect(s, 1.16, 6.35, 17.7, 1.0, WHITE, line="D0D3D6")
+        text(s, 1.5, 6.35, 3.4, 1.0, "WHAT OFTEN GOES WRONG", size=14, bold=True, color=MUTED, spacing=2, anchor=MSO_ANCHOR.MIDDLE)
+        text(s, 5.2, 6.35, 13.4, 1.0, "Scanned PDFs  ·  tables  ·  questions across several documents", size=22,
              anchor=MSO_ANCHOR.MIDDLE)
-        notes(s, "After the round: compare with what people said. Close the loop with the whiteboard list from slide 8. "
-                 "Ask: can you repeat it on your own?")
+        kicker(s, 1.16, 7.75, 17, "Before you trust an answer · the list is at the end of notebook 5")
+        CHECKS = ["Click the source", "Low score: check the ✗ claims", "High score: still check what's missing",
+                  "Scanned PDF or tables? Check what went in", "Several documents? Search may miss one",
+                  "Costly if wrong? Keep \"say you don't know\""]
+        for i, check in enumerate(CHECKS):
+            x, y = 1.16 + (i % 3) * 5.95, 8.3 + (i // 3) * 1.05
+            rect(s, x, y, 0.5, 0.5, YELLOW)
+            text(s, x, y, 0.5, 0.5, str(i + 1), size=17, bold=True, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+            text(s, x + 0.7, y - 0.1, 5.1, 0.7, check, size=18, anchor=MSO_ANCHOR.MIDDLE)
+        notes(s, "After the round: compare with what people said. Then the list promised on slide 8: read it out, one line "
+                 "each; every line is something they saw today. Point 6 is the strict-or-not bonus from notebook 4. Close the "
+                 "loop with the whiteboard list from slide 8. Ask: can you repeat it on your own?")
     else:
+        text(s, 1.16, 6.65, 17.7, 0.6, "One sentence each, round the room.", size=24, color=GREY)
         notes(s, "One sentence each, for example 'my 200 papers on X; I expect the tables to break, because ...'. Above 12 "
                  "people, tables of four, one sentence per table. Then the next slide. If someone asks why not put all "
                  "PDFs in the prompt: cost per question, page citations, and collections larger than any context window.")
