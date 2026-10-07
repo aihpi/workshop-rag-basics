@@ -1,13 +1,13 @@
 # Example corpus — sources & licence / Beispielkorpus — Quellen & Lizenz
 
-**EN** — This folder ships three open-access articles so the template works right
+**EN** — This folder ships three open-access articles so the workshop works right
 after cloning. All three are published in *Scientific Reports* under the
 [Creative Commons Attribution 4.0 International Licence (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/),
 which permits redistribution provided the authors and source are credited — that
 is what this file does. The articles are **unmodified**. They are example data
-only and carry no relationship to this template's authors.
+only and carry no relationship to this workshop's authors.
 
-**DE** — Dieser Ordner enthält drei Open-Access-Artikel, damit das Template
+**DE** — Dieser Ordner enthält drei Open-Access-Artikel, damit der Workshop
 direkt nach dem Clonen funktioniert. Alle drei sind in *Scientific Reports* unter
 der [Creative-Commons-Namensnennung-4.0-Lizenz (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/deed.de)
 veröffentlicht, die die Weitergabe bei Nennung von Autor:innen und Quelle
@@ -39,16 +39,10 @@ dienen ausschließlich als Beispieldaten.
 
 ---
 
-## Replacing the corpus / Korpus austauschen
+## Using your own PDFs / Eigene PDFs verwenden
 
-**EN** — Drop your own PDFs into this folder, pick a fresh
-`vector_store.collection` in your config, then re-ingest:
-`RAG_CONFIG=my-rag.yaml python -m kb.ingest --recreate`.
-Your files stay local — `.gitignore` only whitelists the three examples above.
-You may delete the examples; nothing in the code depends on them.
+**EN** — Attach a PDF in the chatbot (notebook 5), or put it into this folder and
+run notebooks 2 and 3 again. Use test or public documents only.
 
-**DE** — Eigene PDFs einfach hier ablegen, in der Config eine neue
-`vector_store.collection` wählen und neu ingesten:
-`RAG_CONFIG=my-rag.yaml python -m kb.ingest --recreate`.
-Eigene Dateien bleiben lokal — die `.gitignore` lässt nur die drei Beispiele
-oben zu. Die Beispiele dürfen gelöscht werden; kein Code hängt an ihnen.
+**DE** — PDF im Chatbot anhängen (Notebook 5) oder in diesen Ordner legen und
+Notebooks 2 und 3 erneut ausführen. Nur Test- oder öffentliche Dokumente verwenden.

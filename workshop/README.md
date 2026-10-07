@@ -28,7 +28,8 @@ The gateway key is handed out on the day. Put it into `.env`, then check everyth
 fetch the models [Docling](https://github.com/docling-project/docling) uses to read PDFs:
 
 ```bash
-cp .env.example .env    # then paste the key
+cp .env.example .env
+open -e .env            # Windows: notepad .env; paste the key after LLM_API_KEY=
 uv run python check_setup.py
 uv run jupyter lab
 ```
