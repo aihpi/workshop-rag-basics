@@ -1,18 +1,13 @@
 [project]
-# Repo-root project: only the documentation toolchain lives here. The actual
-# application is a separate project under apps/chainlit/ (see its pyproject.toml).
-name = "rag-template"
+name = "rag-workshop"
 version = "0.1.0"
-description = "A config-driven, modular RAG template (Chainlit + LiteLLM + Qdrant)"
-requires-python = ">=3.12"
-dependencies = []
-
-[dependency-groups]
-# Documentation tooling. mkdocs.yml lives at the repo root, so the docs site is
-# built from here: `uv run --only-group docs mkdocs serve`.
-docs = [
-    "mkdocs-material>=9.5",
-    "mkdocstrings[python]>=0.25",
-    "mkdocs-static-i18n>=1.2",
-    "pydantic>=2.7",
+requires-python = ">=3.11"
+dependencies = [
+    "chainlit==2.11.0",
+    "docling>=2.118.0",  # below this, docling-parse leaks ligatures as glyph names
+    "ipywidgets",  # progress bars in the notebook
+    "jupyterlab",
+    "openai>=1.0",
+    "python-dotenv",
+    "qdrant-client>=1.14.1",
 ]
