@@ -133,9 +133,11 @@ def logos(slide):
 
 def footer_logos(slide):
     """Both logos bottom right, on a white card, for slides whose header has no room for them."""
-    rect(slide, 14.3, 10.15, 4.85, 1.15, WHITE)
-    image(slide, "logo-bmftr.png", 14.35, 10.2, w=1.6)
-    image(slide, "logo-kisz.png", 16.3, 10.27, w=2.6)
+    rect(slide, 14.0, 10.05, 5.15, 1.3, WHITE)
+    # Cut the white margin off the BMFTR image (851 × 568 px, logo at 96–747 × 98–477), so the logo itself is larger.
+    bmftr = image(slide, "logo-bmftr.png", 14.15, 10.15, w=1.89, h=1.1)
+    bmftr.crop_left, bmftr.crop_right, bmftr.crop_top, bmftr.crop_bottom = 96 / 851, 104 / 851, 98 / 568, 91 / 568
+    image(slide, "logo-kisz.png", 16.4, 10.24, w=2.6)
 
 
 def content(title, band, label, logo=True, background=None):
