@@ -167,7 +167,6 @@ def divider(number, title, subtitle, fill, ink=WHITE):
     text(slide, 1.16, 3.45, 17, 2.3, title.upper(), size=60, bold=True, color=ink, line=0.95, anchor=MSO_ANCHOR.BOTTOM)
     rect(slide, 1.16, 6.0, 1.75, 0.08, ink)
     text(slide, 1.16, 6.45, 16, 0.6, subtitle, size=24, color=ink)
-    poly(slide, [(0, 8.85), (4.65, H), (0, H)], WHITE)
     rect(slide, 13.75, 0.2, 6.0, 2.0, WHITE)  # the logos need a white background on the coloured slide
     logos(slide)
     page_number(slide)
