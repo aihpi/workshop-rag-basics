@@ -131,12 +131,10 @@ def logos(slide):
     image(slide, "logo-kisz.png", 16.77, 0.43, w=2.8)
 
 
-def footer_logos(slide, bmftr=True):
+def footer_logos(slide):
     """Both logos bottom right, on a white card, for slides whose header has no room for them."""
-    width = 4.85 if bmftr else 3.1
-    rect(slide, 19.15 - width, 10.15, width, 1.15, WHITE)
-    if bmftr:
-        image(slide, "logo-bmftr.png", 14.35, 10.2, w=1.6)
+    rect(slide, 14.3, 10.15, 4.85, 1.15, WHITE)
+    image(slide, "logo-bmftr.png", 14.35, 10.2, w=1.6)
     image(slide, "logo-kisz.png", 16.3, 10.27, w=2.6)
 
 
@@ -170,8 +168,8 @@ def divider(number, title, subtitle, fill, ink=WHITE):
     rect(slide, 1.16, 6.0, 1.75, 0.08, ink)
     text(slide, 1.16, 6.45, 16, 0.6, subtitle, size=24, color=ink)
     poly(slide, [(0, 8.85), (4.65, H), (0, H)], WHITE)
-    image(slide, "logo-bmftr.png", 0.05, 9.75, w=2.62)
-    footer_logos(slide, bmftr=False)
+    rect(slide, 13.75, 0.2, 6.0, 2.0, WHITE)  # the logos need a white background on the coloured slide
+    logos(slide)
     page_number(slide)
     return slide
 
