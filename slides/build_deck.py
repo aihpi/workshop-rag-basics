@@ -131,6 +131,15 @@ def logos(slide):
     image(slide, "logo-kisz.png", 16.77, 0.43, w=2.8)
 
 
+def footer_logos(slide, bmftr=True):
+    """Both logos bottom right, on a white card, for slides whose header has no room for them."""
+    width = 4.85 if bmftr else 3.1
+    rect(slide, 19.15 - width, 10.15, width, 1.15, WHITE)
+    if bmftr:
+        image(slide, "logo-bmftr.png", 14.35, 10.2, w=1.6)
+    image(slide, "logo-kisz.png", 16.3, 10.27, w=2.6)
+
+
 def content(title, band, label, logo=True, background=None):
     """White slide with the coloured band on the left, a vertical section label and the title."""
     slide = prs.slides.add_slide(BLANK)
@@ -146,6 +155,8 @@ def content(title, band, label, logo=True, background=None):
          anchor=MSO_ANCHOR.MIDDLE, line=1.0)
     if logo:
         logos(slide)
+    else:
+        footer_logos(slide)
     page_number(slide)
     return slide
 
@@ -160,6 +171,7 @@ def divider(number, title, subtitle, fill, ink=WHITE):
     text(slide, 1.16, 6.45, 16, 0.6, subtitle, size=24, color=ink)
     poly(slide, [(0, 8.85), (4.65, H), (0, H)], WHITE)
     image(slide, "logo-bmftr.png", 0.05, 9.75, w=2.62)
+    footer_logos(slide, bmftr=False)
     page_number(slide)
     return slide
 
@@ -329,7 +341,6 @@ for i, (colour, label, code, link, bullets, tiles) in enumerate(rows):
 notes(s, "Everything is free and open. Newsletter via the QR code on the left.")
 
 s = content("Infrastructure", DARK, None, logo=False)
-image(s, "logo-kisz.png", 16.77, 0.43, w=2.8)
 image(s, "qr-aisc.png", 1.6, 2.75, w=2.85)
 text(s, 1.6, 5.65, 2.85, 0.35, "aisc.hpi.de · request access", size=13, color=GREY, align=PP_ALIGN.CENTER)
 image(s, "compute-banner.jpeg", 5.09, 2.0, w=7.0)
@@ -369,8 +380,8 @@ for colour, head, items in blocks:
     paras.append([(" ", {"size": 8})])
 text(s, 4.9, 2.2, 7.8, 8.8, paras, size=18, line=1.1)
 image(s, "consulting.jpeg", 12.95, 0.3, w=6.6)
-image(s, "qr-apply.png", 16.15, 7.0, w=2.95)
-text(s, 16.15, 10.0, 2.95, 0.35, "Apply now!", size=13, bold=True, color="DC640D", align=PP_ALIGN.CENTER)
+image(s, "qr-apply.png", 16.15, 6.55, w=2.95)
+text(s, 16.15, 9.55, 2.95, 0.35, "Apply now!", size=13, bold=True, color="DC640D", align=PP_ALIGN.CENTER)
 notes(s, "Concrete call to action: book office hours (QR on the left), apply for a pilot project, "
          "which opens every three months (QR on the right). Bridge: today's models run on exactly this infrastructure; here is what you will build on it.")
 
