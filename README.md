@@ -72,7 +72,7 @@ appendix divider is background for questions.
 
 This repository is the workshop: small on purpose, so you can read every line. For a real project,
 start from the [RAG template](https://github.com/aihpi/pilotproject-rag-template). It runs the same
-steps with more file types, structure-aware chunking, hybrid search, a persistent Qdrant server and
+steps with more file types, a chunker per data source, hybrid search, a persistent Qdrant server and
 an evaluation app, all set in one config file.
 
 The papers in `data/` are open access under CC BY 4.0; see [data/SOURCES.md](data/SOURCES.md).

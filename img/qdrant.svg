@@ -28,7 +28,7 @@ text { font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fil
 <text class="mono" x="48" y="222" text-anchor="start" xml:space="preserve">2</text>
 <text class="mono" x="96" y="222" text-anchor="start" xml:space="preserve">[0.021, 0.003, -0.058, …]</text>
 <text class="mono" x="316" y="222" text-anchor="start" xml:space="preserve">Kage_2018 · p. 2 · “are loade…”</text>
-<text class="label" x="294" y="266" text-anchor="middle">… 197 points, one per chunk</text>
+<text class="label" x="294" y="266" text-anchor="middle">… 206 points, one per chunk</text>
 <rect x="640" y="40" width="196" height="60" rx="10" fill="#f1ebff" stroke="#7c5cd6" stroke-width="1.5"/>
 <text class="title" x="738.0" y="66.0" text-anchor="middle">Question → vector</text>
 <text class="sub" x="738.0" y="84.0" text-anchor="middle">embedded like the chunks</text>

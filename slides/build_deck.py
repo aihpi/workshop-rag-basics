@@ -511,7 +511,7 @@ diagram("docling", 1.16, 2.45, 8.6, s)
 text(s, 1.16, 6.2, 8.5, 1.4, "A PDF stores where to draw each letter. Docling finds headings, paragraphs and tables, "
      "and writes Markdown.", size=19, line=1.25)
 diagram("chunking", 10.6, 2.45, 8.6, s)
-text(s, 10.6, 6.2, 8.6, 1.4, "We cut chunks of 1000 characters; a new one starts every 800, so neighbours share 200.",
+text(s, 10.6, 6.2, 8.6, 1.4, "First every 1000 characters, neighbours sharing 200. Then Docling cuts at headings, paragraphs and table rows.",
      size=19, line=1.25)
 kicker(s, 1.16, 8.05, 9, "Your turn · + only if time")
 numbered(s, 1.16, 8.55, 17, ["Where are the cuts? 300 and 3000, in the notebook", "Bonus: only the tables, in the chatbot"], gap=0.7)
@@ -527,7 +527,7 @@ s = vote("What did you find?", "Vote by show of hands.\nAnswers on the next slid
 notes(s, "Read out, hands up.")
 s = vote("What we found", None, NB2, reveal=[
     ("C", "All 5 tables in the three papers came through with their rows and columns, searchable like any other text."),
-    ("B", "Over the three papers: 1434 chunks instead of 197, so more borders fall inside a table. At 3000: 67 chunks.")])
+    ("B", "1434 chunks instead of 197, so more borders fall inside a table. Docling's chunker cuts between rows instead.")])
 rect(s, 1.16, 9.0, 17.7, 1.1, WHITE)
 text(s, 1.5, 9.0, 3, 1.1, "NEXT", size=15, bold=True, color=MUTED, spacing=3, anchor=MSO_ANCHOR.MIDDLE)
 text(s, 3.4, 9.0, 15.2, 1.1, "We have good chunks. How do we find the right ones for a question?", size=20, anchor=MSO_ANCHOR.MIDDLE)
@@ -540,10 +540,10 @@ s = notebook(3, "Search", 8,
               "Turn the bot into a search engine, no LLM yet"],
              ["Fewer, better results: pick a score cutoff", "Bonus: ask in German"],
              [("you", "What were the lifetime-encoded beads loaded with?", 0.62),
-              ("bot", "Kage_2018_SciReports.pdf, p. 2  (score 0.73)\n› … loaded with different organic fluorophores …\n\n"
-                      "Kage_2018_SciReports.pdf, p. 3  (score 0.64)\n› Table 1. Lifetime codes and respective luminophores …", 2.55),
+              ("bot", "Kage_2018_SciReports.pdf, p. 2  (score 0.76)\n› … loaded with different organic fluorophores …\n\n"
+                      "Kage_2018_SciReports.pdf, p. 3  (score 0.62)\n› Table 1. Lifetime codes and respective luminophores …", 2.55),
               ("you", "What is the capital of France?", 0.62),
-              ("bot", "Kage_2018_SciReports.pdf, p. 6  (score 0.17) …", 0.75)])
+              ("bot", "Schmidt_2022_SciReports.pdf, p. 8  (score 0.17) …", 0.75)])
 notes(s, "S3. 8 minutes. Time box, then continue: nobody waits for the bonuses. Before you move on: everyone sees the 'saved … chunks' line (index.json)? Make them ask the France question before you explain anything.")
 
 # ---------------------------------------------------------------------------- 18 why France
@@ -665,7 +665,7 @@ for reveal in (False, True):
 # ---------------------------------------------------------------------------- 24 where to take this
 s = content("Where to take this", BLUE, "NEXT STEPS")
 rows = [("Today", "The template"),
-        ("Fixed 1000-character chunks", "Structure-aware chunkers, chosen per data source"),
+        ("One chunker for every file", "A chunker per data source, set in a config file"),
         ("Qdrant in memory, rebuilt on every start", "Qdrant server, ingested once, updated when files change"),
         ("Vector search only", "Hybrid search: vectors plus keyword matching"),
         ("Faithfulness, one answer at a time", "An evaluation app that compares setups")]
@@ -736,12 +736,15 @@ text(s, 1.16, 6.3, 8.4, 1.4, "A PDF only stores where to draw each letter. Docli
      "figures, and writes Markdown.", size=18, line=1.25)
 kicker(s, 10.5, 2.0, 8, "Step 2 · cut into chunks")
 diagram("chunking", 10.5, 2.5, 8.6, s)
-text(s, 10.5, 6.3, 8.6, 4, [[("Our notebook: ", {"bold": True}), ("every 1000 characters, with 200 overlap. Simple, the same "
+text(s, 10.5, 6.3, 8.6, 4, [[("Fixed size: ", {"bold": True}), ("every 1000 characters, with 200 overlap. Simple, the same "
                              "for every document, but it may cut through a table.", {})],
                             [(" ", {"size": 8})],
+                            [("Our notebook: ", {"bold": True}), ("Docling's HybridChunker, at headings, paragraphs and "
+                             "table rows, below 256 tokens.", {})],
+                            [(" ", {"size": 8})],
                             [("GrundschutzKI: ", {"bold": True}), ("at every heading, because the BSI standards are clearly "
-                             "structured. A chunk keeps its title. Docling ships several such chunkers.", {})]], size=18, line=1.25)
-notes(s, "3 minutes. One method of many: fixed size with overlap is what the notebook does. "
+                             "structured. A chunk keeps its title.", {})]], size=18, line=1.25)
+notes(s, "3 minutes. Fixed size shows the problem; Docling's HybridChunker is what the notebooks use from notebook 2 on. "
          "Structured documents chunk better along headings.")
 
 s = content("Prompt and citations", BLUE, "BASICS")

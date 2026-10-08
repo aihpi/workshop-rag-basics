@@ -1,17 +1,20 @@
 """Run once you have the key: uv run python check_setup.py
 
 Checks your gateway key and the two models, and downloads Docling's models
-(about 500 MB) so notebook 2 doesn't have to wait for them.
+(about 500 MB) and its chunker's tokenizer, so notebook 2 doesn't have to wait for them.
 """
 import os
 
+from docling.chunking import HybridChunker
 from docling.datamodel.base_models import InputFormat
 from docling.datamodel.pipeline_options import PdfPipelineOptions
 from docling.document_converter import DocumentConverter, PdfFormatOption
+import transformers
 from dotenv import load_dotenv
 from openai import OpenAI
 
 load_dotenv()
+transformers.logging.set_verbosity_error()  # hides a harmless warning about long texts
 llm = OpenAI(base_url=os.environ["LLM_BASE_URL"], api_key=os.environ["LLM_API_KEY"])
 
 print("Chat model ...", end=" ", flush=True)
@@ -26,5 +29,6 @@ print("Docling (the first run downloads its models, a few minutes) ...", flush=T
 converter = DocumentConverter(
     format_options={InputFormat.PDF: PdfFormatOption(pipeline_options=PdfPipelineOptions(do_ocr=False))}
 )
-converter.convert("data/Schmidt_2022_SciReports.pdf")
+document = converter.convert("data/Schmidt_2022_SciReports.pdf").document
+list(HybridChunker().chunk(dl_doc=document))  # also downloads the chunker's tokenizer
 print("ok\n\nYou're ready for the workshop.")
